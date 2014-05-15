@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'acuerdos.acuerdo',
     'acuerdos.general',
+    'sqlserver_ado.sql_app',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,6 +48,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(os.path.dirname(__file__), 'media/plantillas'),
 )
 
 ROOT_URLCONF = 'acuerdos.urls'
@@ -66,7 +74,29 @@ DATABASES = {
         'PASSWORD': 'postgres',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '5432',                      # Set to empty string for default.
-    }
+    },
+    'sace': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'sace_db',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': 'usrtmp',
+        'PASSWORD': 'usrtmp',
+        'HOST': '172.17.32.1',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '5634',                      # Set to empty string for default.
+    },
+    'siarhd': {
+        'ENGINE': 'sqlserver_ado',
+        'NAME': 'proyecto_siarhd',
+        'HOST': '172.17.32.8',
+        'USER': 'jchavarria',
+        'PASSWORD': 'educacion2014',
+        'OPTIONS': {
+            # 'provider': 'SQLOLEDB',
+            'provider': 'SQLNCLI11',
+            # 'extra_params': 'DataTypeCompatibility=80;MARS Connection=True;',
+            'use_legacy_date_fields': False,
+        },
+    },
 }
 
 # Internationalization
@@ -85,5 +115,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
+MEDIA_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), 'media/'))
+
+STATIC_ROOT = ''
+
+MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'

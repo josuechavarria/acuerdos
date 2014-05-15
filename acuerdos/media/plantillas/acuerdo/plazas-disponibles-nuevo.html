@@ -1,0 +1,174 @@
+{% extends "base_plazas.html" %}
+
+{% block ubicacion %}
+	<li class="active">
+		<a href="{% url 'vista_plazas_nuevo' %}">Nueva Plaza</a>
+	</li>
+{% endblock %}
+
+{% block header %}
+	Nueva Plaza
+{% endblock %}
+
+{% block content %}
+	<form method="POST" class="form-horizontal" role="form" {% if formulario.is_multipart %}enctype="multipart/form-data"{% endif %}>
+		{{ form.non_field_errors }}
+		{% if mensaje %}<div class="alert alert-danger">{{ mensaje }}</div>{% endif %}
+		{% csrf_token %}
+		<fieldset>
+			<div class="form-group">
+
+				<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> Nombre del Centro:
+				</label>
+
+				<div class="col-sm-9">
+					<span class="label label-xlg label-success">{{ nombre_centro }}</label>
+				</div>
+		 	</div>
+
+			<div class="form-group">
+
+				<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.codigo_centro.label_tag }}
+				</label>
+
+				<div class="col-sm-9">
+					{{ formulario.codigo_centro }}
+					{{ formulario.codigo_centro.errors }}
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.nivel_educativo.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.nivel_educativo.errors }}
+					<select id="id_nivel_educativo" name="nivel_educativo">
+					    <option selected="selected" value="">---------</option>
+					    {% for s in subnivel %}
+					    	<option value="{{ s.sub_niveleducativo.id }}">{{ s.sub_niveleducativo.nivel_educativo.nombre }} - {{ s.sub_niveleducativo.nombre }}</option>
+					    {% endfor %}
+					</select>
+				</div>
+		 	</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.cargo.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.cargo}}
+					<!-- Texto de ayuda -->
+					&nbsp;&nbsp;&nbsp;<span class="badge badge-info tooltip-info" title="" data-placement="right" data-rel="tooltip" data-original-title="{{ formulario.cargo.help_text }}"><i class="icon-info white"></i></span>
+					<!-- Fin de texto de ayuda -->
+					{{ formulario.cargo.errors }}
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.jornada.label_tag }}</label>
+
+				<div class="col-sm-9">
+					<select id="id_jornada" name="jornada" multiple="" class="width-40  chosen-select" data-placeholder="Elija una jornada...">
+						{% for j in jornada %}
+						    <option value="">&nbsp;</option>
+						    <option value="{{ j.jornada.id }}">{{ j.jornada.descripcion }}</option>
+					    {% endfor %}
+					</select>
+					<!-- Texto de ayuda -->
+					&nbsp;&nbsp;&nbsp;<span class="badge badge-info tooltip-info" title="" data-placement="right" data-rel="tooltip" data-original-title="Puede elegir mas de una jornada."><i class="icon-info white"></i></span>
+					<!-- Fin de texto de ayuda -->
+					{{ formulario.jornada.errors }}
+					
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.horas.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.horas }}
+					{{ formulario.horas.errors }}
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.motivo.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.motivo }}
+					{{ formulario.motivo.errors }}
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.disponible.label_tag }}</label>
+
+				<div class="col-sm-9">
+					<label>
+						{{ formulario.disponible }}
+						<span class="lbl"></span>
+					</label>
+					
+					{{ formulario.disponible.errors }}
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.observacion.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.observacion }}
+					{{ formulario.observacion.errors }}
+				</div>
+		 	</div>
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit">
+					<i class="icon-ok bigger-110"></i>
+					Guardar
+					</button>
+					&nbsp; &nbsp; &nbsp;
+					<a class="btn" href="{% url 'vista_plazas_listar' %}">
+						<i class="icon-list-alt bigger-110"></i>
+						Listado
+					</a>
+				</div>
+			</div>
+
+			<div class="space-4"></div>
+		</fieldset>
+	</form>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#id_codigo_centro").val("{{codigo_centro}}")
+			$( "#id_codigo_centro" ).attr('readonly','readonly');
+			{% if exito %}
+				$.gritter.add({
+						title: '¡Éxito!',
+						text: 'Su información ha sido almacenada exitosamente.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-success gritter-center' + (!$('#gritter-center').get(0).checked ? ' gritter-success gritter-center' : '')
+				});
+			{% endif %}
+			{% if error %}
+				$.gritter.add({
+						title: '¡Falló!',
+						text: 'Ocurrió un error al guardar los datos, por favor revise la información digitada.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+				});
+			{% endif %}
+			$('#id_horas').ace_spinner({value:1,min:1,max:100,step:1, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+				.on('change', function(){
+					//alert(this.value)
+				});
+			$(".chosen-select").chosen();
+			$('[data-rel=tooltip]').tooltip();
+		});
+	</script>
+{% endblock %}
