@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Acuerdos - Login</title>
+
+		<meta name="description" content="User login page" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="media/estaticos/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="media/estaticos/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" href="media/estaticos/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="media/estaticos/css/ace.min.css" />
+		<link rel="stylesheet" href="media/estaticos/css/ace-rtl.min.css" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body class="login-layout light-login">
+		<div class="main-container">
+			<div class="main-content">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="login-container">
+							<div class="center">
+								<img src="media/estaticos/images/logo_se.png">
+								<h4 class="blue">&copy; Secretaría de Educación</h4>
+								<h1>
+									<i class="icon-file-text orange"></i>
+									<span class="white">Módulo</span>
+									<span class="white">de Acuerdos</span>
+								</h1>
+							</div>
+
+							<div class="space-6"></div>
+
+							<div class="position-relative">
+								<div id="login-box" class="login-box visible widget-box no-border">
+									<div class="widget-body">
+										<div class="widget-main">
+											<h4 class="header blue lighter bigger">
+												<i class="icon-info green"></i>
+												Por favor ingrese sus datos
+											</h4>
+
+											<div class="space-6"></div>
+												{% block form_login %}
+													
+												{% endblock %}
+										</div><!-- /widget-main -->
+
+										<div class="toolbar clearfix">
+											<div>
+												<a href="www.se.gob.hn" class="forgot-password-link">
+													<i class="icon-arrow-left"></i>
+													www.se.gob.hn
+												</a>
+											</div>
+
+											<div>
+												<a href="#" class="user-signup-link">
+													| Recuperar Clave
+													<i class="icon-arrow-right"></i>
+												</a>
+											</div>
+										</div>
+									</div><!-- /widget-body -->
+								</div><!-- /login-box -->
+							</div><!-- /position-relative -->
+						</div>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='media/estaticos/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='media/estaticos/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			function show_box(id) {
+			 jQuery('.widget-box.visible').removeClass('visible');
+			 jQuery('#'+id).addClass('visible');
+			}
+		</script>
+	</body>
+</html>

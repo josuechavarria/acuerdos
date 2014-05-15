@@ -1,0 +1,37 @@
+{% extends "base_login.html" %}
+
+{% block form_login %}
+	<form method="POST" {% if formulario.is_multipart %}enctype="multipart/form-data"{% endif %}>
+		{{ form.non_field_errors }}
+		{% if mensaje %}<div class="alert alert-danger">{{ mensaje }}</div>{% endif %}
+		{% csrf_token %}
+		<fieldset>
+			<label class="block clearfix">
+				<span class="block input-icon input-icon-right">
+					{{ formulario.username.errors }}
+					{{ formulario.username }}
+					<i class="icon-user"></i>
+				</span>
+			</label>
+
+			<label class="block clearfix">
+				<span class="block input-icon input-icon-right">
+					{{ formulario.password.errors }}
+					{{ formulario.password }}
+					<i class="icon-lock"></i>
+				</span>
+			</label>
+
+			<div class="clearfix">
+				<center>
+					<button type="submit" class="width-35 btn btn-sm btn-primary">
+					<i class="icon-key"></i>
+					Acceder
+					</button>
+				</center>
+			</div>
+
+			<div class="space-4"></div>
+		</fieldset>
+	</form>
+{% endblock %}

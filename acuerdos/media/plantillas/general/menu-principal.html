@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Administración - Menú de opciones</title>
+
+		<meta name="description" content="404 Error Page" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="/media/estaticos/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/media/estaticos/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" href="/media/estaticos/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="/media/estaticos/css/ace.min.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/ace-skins.min.css" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script src="/media/estaticos/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar skin-1 top-menu" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+							<i class="icon-cogs"></i>
+							Administración - Menú de opciones
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="/media/estaticos/avatars/avatar.png" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>Hola,</small>
+									{{user.first_name}}
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#">
+										<i class="icon-cog"></i>
+										Settings
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-user"></i>
+										Profile
+									</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="{% url 'vista_logout' %}">
+										<i class="icon-off"></i>
+										Logout
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					
+<!-- Plazas ||| consultar, reportar vacante  -->
+					<ul class="nav nav-list">
+						{% if perms.acuerdo.can_view_acuerdos %}
+						<li>
+							<a href="widgets.html">
+								<i class="icon-list-alt"></i>
+								<span class="menu-text"> Acuerdos </span>
+							</a>
+						</li>
+						{% endif %}
+						{% if perms.acuerdo.can_view_plazas_disponibles %}
+						<li>
+							<a href="{% url 'vista_plazas_inicio' %}">
+								<i class="icon-list-alt"></i>
+								<span class="menu-text"> Plazas Disponibles </span>
+							</a>
+						</li>
+						{% endif %}
+						{% if perms.acuerdo.can_view_reportes %}
+						<li>
+							<a href="widgets.html">
+								<i class="icon-list-alt"></i>
+								<span class="menu-text"> Reportes </span>
+							</a>
+						</li>
+						{% endif %}
+					</ul><!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li class="active">
+								<i class="icon-home home-icon"></i>
+								<a href="{% url 'vista_inicio' %}">Menú de opciones</a>
+							</li>
+							{% block ubicacion %}
+							{% endblock %}
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Buscar ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+						{% if perms.acuerdo.can_view_acuerdos %}
+							<div class="col-xs-12 col-sm-3 widget-container-span">
+										<div class="widget-box light-border">
+											<div class="widget-header header-color-green">
+												
+												<h5 class="smaller">
+												<i class="icon-tasks"></i>
+												<a href="#" class="white" title="Click para ir al menú de acuerdos." >
+													Acuerdos
+												</a>
+												</h5>
+
+												<div class="widget-toolbar">
+													<a href="#" class="">
+														<i class="icon-arrow-right white"></i>
+													</a>
+												</div>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main padding-6">
+													<div class="alert alert-success"> 
+													Menú de administración de acuerdos por dirección departamental.
+														<a href="#" class="btn btn-info btn-xs pull-right">
+															<i class="icon-arrow-right bigger-20"></i>
+															Ir
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+							</div>
+						{% endif %}
+						{% if perms.acuerdo.can_view_plazas_disponibles %}
+							<div class="col-xs-12 col-sm-3 widget-container-span">
+										<div class="widget-box light-border">
+											<div class="widget-header header-color-blue">
+												
+												<h5 class="smaller">
+												<i class="icon-tasks"></i>
+												<a href="{% url 'vista_plazas_inicio' %}" class="white" title="Click para ir al menú de acuerdos." >
+													Plazas Disponibles
+												</a>
+												</h5>
+
+												<div class="widget-toolbar">
+													<a href="{% url 'vista_plazas_inicio' %}" class="">
+														<i class="icon-arrow-right white"></i>
+													</a>
+												</div>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main padding-6">
+													<div class="alert alert-info"> Permite el registro de una plaza disponible en un centro educativo, publicada por el director. 
+														<a href="{% url 'vista_plazas_inicio' %}" class="btn btn-info btn-xs pull-right">
+															<i class="icon-arrow-right bigger-20"></i>
+															Ir
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+							</div>
+						{% endif %}
+						{% if perms.acuerdo.can_view_reportes %}
+							<div class="col-xs-12 col-sm-3 widget-container-span">
+										<div class="widget-box light-border">
+											<div class="widget-header header-color-orange">
+												
+												<h5 class="smaller">
+												<i class="icon-tasks"></i>
+												<a href="#" class="white" title="Click para ir al menú de acuerdos." >
+													Reportes
+												</a>
+												</h5>
+
+												<div class="widget-toolbar">
+													<a href="#" class="">
+														<i class="icon-arrow-right white"></i>
+													</a>
+												</div>
+											</div>
+
+											<div class="widget-body">
+												<div class="widget-main padding-6">
+													<div class="alert alert-warning"> Permite consultar la información referente a las acciones sobre un acuerdo. 
+														<a href="#" class="btn btn-info btn-xs pull-right">
+															<i class="icon-arrow-right bigger-20"></i>
+															Ir
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+							</div>
+						{% endif %}
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+				<div class="ace-settings-container" id="ace-settings-container">
+					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+						<i class="icon-cog bigger-150"></i>
+					</div>
+
+					<div class="ace-settings-box" id="ace-settings-box">
+						<div>
+							<div class="pull-left">
+								<select id="skin-colorpicker" class="hide">
+									<option data-skin="default" value="#438EB9">#438EB9</option>
+									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+								</select>
+							</div>
+							<span>&nbsp; Choose Skin</span>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+							<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+							<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+							<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+							<label class="lbl" for="ace-settings-add-container">
+								Inside
+								<b>.container</b>
+							</label>
+						</div>
+					</div>
+				</div><!-- /#ace-settings-container -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='/media/estaticos/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/media/estaticos/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="/media/estaticos/js/bootstrap.min.js"></script>
+		<script src="/media/estaticos/js/typeahead-bs2.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+
+		<script src="/media/estaticos/js/ace-elements.min.js"></script>
+		<script src="/media/estaticos/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+	</body>
+</html>
