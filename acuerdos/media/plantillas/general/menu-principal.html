@@ -18,6 +18,10 @@
 
 		<!-- page specific plugin styles -->
 
+		<link rel="stylesheet" href="/media/estaticos/css/jquery-ui-1.10.3.custom.min.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/chosen.css" />
+
 		<!-- fonts -->
 
 		<link rel="stylesheet" href="/media/estaticos/css/ace-fonts.css" />
@@ -38,12 +42,6 @@
 
 		<script src="/media/estaticos/js/ace-extra.min.js"></script>
 
-		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-		<!--[if lt IE 9]>
-		<script src="assets/js/html5shiv.js"></script>
-		<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
 	</head>
 
 	<body>
@@ -125,7 +123,7 @@
 					<ul class="nav nav-list">
 						{% if perms.acuerdo.can_view_acuerdos %}
 						<li>
-							<a href="widgets.html">
+							<a href="{% url 'vista_acuerdos_inicio' %}">
 								<i class="icon-list-alt"></i>
 								<span class="menu-text"> Acuerdos </span>
 							</a>
@@ -145,6 +143,39 @@
 								<i class="icon-list-alt"></i>
 								<span class="menu-text"> Reportes </span>
 							</a>
+						</li>
+						{% endif %}
+						{% if perms.auth.add_user %}
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-user"></i>
+								<span class="menu-text"> Usuarios </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="{% url 'vista_usuarios_nuevo' %}">
+										<i class="icon-double-angle-right"></i>
+										Nuevo usuario
+									</a>
+								</li>
+
+								<li>
+									<a href="{% url 'vista_usuarios_recuperar_password' %}">
+										<i class="icon-double-angle-right"></i>
+										Recuperar clave
+									</a>
+								</li>
+
+								<li>
+									<a href="{% url 'vista_usuarios_deshabilitar' %}">
+										<i class="icon-double-angle-right"></i>
+										Deshabilitar usuario
+									</a>
+								</li>
+							</ul>
 						</li>
 						{% endif %}
 					</ul><!-- /.nav-list -->
@@ -184,7 +215,16 @@
 					</div>
 
 					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								{% block header %}
+									Menú de opciones
+								{% endblock %}
+							</h1>
+						</div><!-- /.page-header -->
+						<div class="space" id="gritter-center"></div>
 						<div class="row">
+						{% block content %}
 						{% if perms.acuerdo.can_view_acuerdos %}
 							<div class="col-xs-12 col-sm-3 widget-container-span">
 										<div class="widget-box light-border">
@@ -192,13 +232,13 @@
 												
 												<h5 class="smaller">
 												<i class="icon-tasks"></i>
-												<a href="#" class="white" title="Click para ir al menú de acuerdos." >
+												<a href="{% url 'vista_acuerdos_inicio' %}" class="white" title="Click para ir al menú de acuerdos." >
 													Acuerdos
 												</a>
 												</h5>
 
 												<div class="widget-toolbar">
-													<a href="#" class="">
+													<a href="{% url 'vista_acuerdos_inicio' %}" class="">
 														<i class="icon-arrow-right white"></i>
 													</a>
 												</div>
@@ -208,7 +248,7 @@
 												<div class="widget-main padding-6">
 													<div class="alert alert-success"> 
 													Menú de administración de acuerdos por dirección departamental.
-														<a href="#" class="btn btn-info btn-xs pull-right">
+														<a href="{% url 'vista_acuerdos_inicio' %}" class="btn btn-info btn-xs pull-right">
 															<i class="icon-arrow-right bigger-20"></i>
 															Ir
 														</a>
@@ -282,6 +322,7 @@
 										</div>
 							</div>
 						{% endif %}
+						{% endblock %}
 						</div><!-- /.row -->
 					</div><!-- /.page-content -->
 				</div><!-- /.main-content -->
@@ -344,32 +385,37 @@
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
-
-		<script type="text/javascript">
-			window.jQuery || document.write("<script src='/media/estaticos/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
-		</script>
-
-		<!-- <![endif]-->
-
-		<!--[if IE]>
-<script type="text/javascript">
- window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
-</script>
-<![endif]-->
-
+		
+		<script src="/media/estaticos/js/jquery-2.0.3.min.js"></script>
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src='/media/estaticos/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
 		<script src="/media/estaticos/js/bootstrap.min.js"></script>
+		
 		<script src="/media/estaticos/js/typeahead-bs2.min.js"></script>
 
 		<!-- page specific plugin scripts -->
 
-		<!-- ace scripts -->
+		<!--[if lte IE 8]>
+		  <script src="assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="/media/estaticos/js/jquery.dataTables.min.js"></script>
+<script src="/media/estaticos/js/jquery.dataTables.bootstrap.js"></script>
 
-		<script src="/media/estaticos/js/ace-elements.min.js"></script>
+		<script src="/media/estaticos/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="/media/estaticos/js/jquery.gritter.min.js"></script>
+
+		<!-- ace scripts -->
 		<script src="/media/estaticos/js/ace.min.js"></script>
+		<script src="/media/estaticos/js/ace-elements.min.js"></script>
+		<script src="/media/estaticos/js/chosen.jquery.min.js"></script>
+		<script src="/media/estaticos/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="/media/estaticos/js/bootbox.min.js"></script>
+
 
 		<!-- inline scripts related to this page -->
+		{% block extrajs %}
+		{% endblock %}
+
 	</body>
 </html>

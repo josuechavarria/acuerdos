@@ -8,7 +8,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
-from acuerdos.general.models import estados_plaza,cargos,motivos, niveles_educativos, subniveles_educativos, jornadas
+from acuerdos.general.models import estados_plaza,cargos,motivos, niveles_educativos, subniveles_educativos, jornadas, tipos_movimientos
 
 # Create your models here.
 
@@ -59,3 +59,26 @@ class plazas_disponibles(models.Model):
 			("can_view_plazas_disponibles", "Puede ver las plazas disponibles de su centro"),
 		)
 		verbose_name_plural = "plazas disponibles"
+
+class acuerdo(models.Model):
+	#infomacion general del acuerdo
+	accion=models.CharField(max_length=30)
+	fecha=models.DateField(default=datetime.now())
+	movimiento=models.ForeignKey(tipos_movimientos)
+	vigencia_desde=models.DateField()
+	vigencia_hasta=models.DateField(default=None, null=True)
+	#infomacion del docente
+	clave_escalafon_docente=models.CharField(max_length=15)
+	nombres_docente=models.CharField(max_length=45)
+	apellidos_docente=models.CharField(max_length=45)
+	identidad_docente=models.CharField(max_length=13)
+	sexo_docente=models.CharField(max_length=10)
+	fecha_nacimiento_docente=models.DateField()
+	
+	estado_docente=models.CharField(max_length=25)
+	#informacion del centro educativo
+	codigo_centro=models.CharField(max_length=9, verbose_name="Código estadístico")
+	nombre_centro=models.CharField(max_length=255, verbose_name="Nombre Centro")
+
+
+	

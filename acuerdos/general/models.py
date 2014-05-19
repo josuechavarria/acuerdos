@@ -80,6 +80,15 @@ class motivos(models.Model):
 	class Meta:
 		verbose_name_plural = "motivos"
 
+class tipos_movimientos(models.Model):
+	descripcion=models.CharField(max_length=255, verbose_name="descripción")
+
+	def __unicode__(self):
+		return self.descripcion
+
+	class Meta:
+		verbose_name_plural = "Tipos movimientos"
+
 class tipos_acuerdos(models.Model):
 	descripcion=models.CharField(max_length=255, verbose_name="descripción")
 
@@ -147,7 +156,7 @@ class subniveles_educativos(models.Model):
 	max_anio = models.IntegerField()
 
 	def __unicode__(self):
-		return self.nombre
+		return '%s - %s' % (self.nivel_educativo.nombre, self.nombre)
 
 	class Meta:
 		verbose_name_plural = "subniveles educativos"
