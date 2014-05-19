@@ -14,8 +14,6 @@ from acuerdos.acuerdo.models_sace import *
 
 @login_required
 def view_index(request):
-	'''for depto in EeMunicipios.objects.using('siarhd').filter(departamento_id__descripcion_departamento='YORO'):
-		print depto.descripcion_municipio'''
 	return render_to_response('general/menu-principal.html', context_instance=RequestContext(request))
 
 def view_login_1(request):
@@ -97,4 +95,95 @@ def view_login(request):
 def view_logout(request):
 	logout(request)
 	return HttpResponseRedirect('/')
+
+
+@permission_required('auth.add_user', login_url='/inicio/')
+def view_usuarios_nuevo(request):
+	#recuperar datos del centro
+		if request.method == 'POST':
+			print "hizo post"
+			formulario = FormNuevoUsuario(request.POST)		
+			if formulario.is_valid():
+				print "form is_valid"
+				#generar usuario aleatorio identidad + 4 numeros random
+				random_usuario = User.objects.make_random_password(length=4, allowed_chars='0123456789')
+				random_password = User.objects.make_random_password(length=8, allowed_chars='0123456789qwertyuiopasdfghjklzxcvbnm')
+				usuario=formulario.cleaned_data['identidad']+str(random_usuario)
+				nombre_completo=formulario.cleaned_data['nombres']+" "+formulario.cleaned_data['apellidos']
+				grupo = Group.objects.get(id=2)
+				user = User.objects.create_user(
+					username=usuario, 
+					email='example@example.com', 
+					password=random_password,
+					first_name=formulario.cleaned_data['nombres'],
+					last_name=formulario.cleaned_data['apellidos'],
+					departamento=formulario.cleaned_data['departamento'],
+					telefono=formulario.cleaned_data['telefono']
+				)
+				user.groups.add(grupo)
+				user.save()
+				#retornar exito
+				formulario = FormNuevoUsuario()
+				ctx = {'formulario': formulario, 'exito':"si", 'nombre': nombre_completo, 'usuario': usuario, 'password':random_password}
+			else:
+				ctx = {'formulario':formulario, 'error':'cx'}		
+		else:
+			formulario = FormNuevoUsuario()
+			ctx = {'formulario': formulario}
+		return render_to_response('general/usuario-nuevo.html', ctx, context_instance=RequestContext(request))
+
+@permission_required('auth.change_user', login_url='/inicio/')
+def view_usuarios_recuperar_password(request):
+	#recuperar datos del centro
+		if request.method == 'POST':
+			print "hizo post"
+			formulario = FormRecuperarclave(request.POST)		
+			if formulario.is_valid():
+				print "form is_valid"
+				#generar password aleatorio identidad + 4 numeros random
+				random_password = User.objects.make_random_password(length=8, allowed_chars='0123456789qwertyuiopasdfghjklzxcvbnm')
+				if User.objects.filter(username__startswith=formulario.cleaned_data['identidad'][:9], departamento=formulario.cleaned_data['departamento'], telefono=formulario.cleaned_data['telefono']):
+					user=User.objects.get(username__startswith=formulario.cleaned_data['identidad'][:9], departamento=formulario.cleaned_data['departamento'], telefono=formulario.cleaned_data['telefono'])
+					usuario=user.username
+					nombre_completo=user.get_full_name()
+					user.set_password(random_password)
+					user.save()
+					#retornar exito
+					formulario = FormRecuperarclave()
+					ctx = {'formulario': formulario, 'exito':"si", 'nombre': nombre_completo, 'usuario': usuario, 'password':random_password}
+				else:
+					#retornar error
+					ctx = {'formulario': formulario, 'error':'cx'}
+			else:
+				ctx = {'formulario':formulario, 'error':'cx'}
+		else:
+			formulario = FormRecuperarclave()
+			ctx = {'formulario': formulario}
+		return render_to_response('general/usuario-clave-recuperar.html', ctx, context_instance=RequestContext(request))
+
+@permission_required('auth.change_user', login_url='/inicio/')
+def view_usuarios_deshabilitar(request):
+	#recuperar datos del centro
+		if request.method == 'POST':
+			print "hizo post"
+			formulario = FormRecuperarclave(request.POST)		
+			if formulario.is_valid():
+				print "form is_valid"
+				if User.objects.filter(username__startswith=formulario.cleaned_data['identidad'][:9], departamento=formulario.cleaned_data['departamento'], telefono=formulario.cleaned_data['telefono']):
+					user=User.objects.get(username__startswith=formulario.cleaned_data['identidad'][:9], departamento=formulario.cleaned_data['departamento'], telefono=formulario.cleaned_data['telefono'])
+					nombre_completo=user.get_full_name()
+					user.is_active=False
+					user.save()
+					#retornar exito
+					formulario = FormRecuperarclave()
+					ctx = {'formulario': formulario, 'exito':"si", 'nombre': nombre_completo}
+				else:
+					#retornar error
+					ctx = {'formulario': formulario, 'error':'cx'}
+			else:
+				ctx = {'formulario':formulario, 'error':'cx'}
+		else:
+			formulario = FormRecuperarclave()
+			ctx = {'formulario': formulario}
+		return render_to_response('general/usuario-deshabilitar.html', ctx, context_instance=RequestContext(request))
 

@@ -1,0 +1,109 @@
+{% extends "base_acuerdos.html" %}
+
+{% block ubicacion %}
+	<li class="active">
+		<a href="{% url 'vista_plazas_listar' %}">Listado de Plazas</a>
+	</li>
+{% endblock %}
+
+{% block header %}
+	{{ codigo_centro }} - {{ nombre_centro }}
+{% endblock %}
+
+{% block content %}
+<div class="table-header">
+	Listado de plazas publicadas
+</div>
+		
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="table-responsive">
+											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+				<th>Municipio</th>
+				<th>Centro Educativo</th>
+				<th>Nivel Educativo</th>
+				<th>Cargo</th>
+				<th>Motivo</th>
+				<th>¿Tiene acuerdo asignado?</th>
+				<th></th>
+													</tr>
+												</thead>
+
+												<tbody>
+{% for p in plazas %}
+													<tr>
+														<td class="center">
+															{{ p.municipio }}
+														</td>
+														<td class="center">
+															{{ p.codigo_centro }} - {{ p.nombre_centro }}
+														</td>
+														<td class="center">
+															{{ p.nivel_educativo }}
+														</td>
+
+														<td>{{ p.cargo }}</td>
+														<td>{{ p.motivo }}</td>
+														
+														<td><span class="label label-sm label-danger">No</span></td>
+														
+														<td>
+															<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+															{% if perms.acuerdo.change_plazas_disponibles %}
+																<a id="ver-detalle-{{ p.pk }}" class="green" href="#">
+																	<i class="icon-eye-open bigger-130"></i> ver detalle
+																</a>
+															{% endif %}
+															{% if perms.acuerdo.add_plazas_disponibles %}
+																<a data-placement="left" data-rel="tooltip" data-original-title="Crea un acuerdo para esta plaza." class="blue tooltip-info" href="{% url 'vista_plazas_nuevo' %}">
+																	<i class="icon-plus-sign purple bigger-130"></i> Crear Acuerdo
+																</a>
+															{% endif %}
+															
+											
+															</div>
+														</td>
+
+							<script type="text/javascript">
+								jQuery(function($) {
+
+											
+										
+								})
+							</script>
+													
+													</tr>
+{% endfor %}
+												</tbody>
+											</table>
+										</div>
+{% endblock %}
+
+{% block extrajs %}
+
+<script type="text/javascript">
+	jQuery(function($) {
+				var oTable1 = $('#sample-table-2').dataTable();
+
+			{% for p in plazas %}
+				$('#ver-detalle-{{ p.pk }}').on(ace.click_event, function() {
+					bootbox.dialog({
+					message: "<p class='header bigger-170 lighter blue'>DETALLE DE LA PLAZA</p><p class='bigger-110'><b>Municipio: </b> {{p.municipio}}</p><p class='bigger-110'><b>Aldea: </b> {{p.aldea}}</p><p class='bigger-110'><b>Centro Educativo: </b> {{p.codigo_centro}} - {{p.nombre_centro}} </p><p class='bigger-110'><b>Nivel Educativo: </b> {{p.nivel_educativo}}</p><p class='bigger-110'><b>Dirección del centro: </b> {{p.direccion_centro}}</p><p class='bigger-110'><b>Cargo: </b> {{p.cargo}}</p><p class='bigger-110'><b>Jornada(s): </b><ul>{% for j in p.jornada.all %}<li> {{j.descripcion}} </li>{% endfor %}</ul></p><p class='bigger-110'><b>Motivo: </b> {{p.motivo}}</p><p class='bigger-110'><b>Horas: </b> {{p.horas}}</p><p class='bigger-110'><b>Observación: </b> {{p.observacion}}</p><p class='header bigger-120 lighter blue'>DATOS DEL DIRECTOR</p><p class='bigger-110'><b>Nombre Completo: </b> {{p.nombre_director}}</p><p class='bigger-110'><b>Teléfono: </b> {{p.telefono_director}}</p><p class='bigger-110'><b>Correo: </b> {{p.correo_director}}</p>",
+					buttons: 			
+						{
+							"button" :
+							{
+								"label" : "Cerrar",
+								"className" : "btn-sm btn-primary"
+							}
+						}
+					});
+				});
+			{% endfor %}
+			$('[data-rel=tooltip]').tooltip();
+	})
+</script>
+	
+{% endblock %}

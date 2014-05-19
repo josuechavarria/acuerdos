@@ -1,0 +1,127 @@
+{% extends "general/menu-principal.html" %}
+
+{% block ubicacion %}
+	<li class="active">
+		<a href="{% url 'vista_usuarios_deshabilitar' %}">Deshabilitar usuario</a>
+	</li>
+{% endblock %}
+
+{% block header %}
+	Nuevo Usuario
+{% endblock %}
+
+{% block content %}
+	{% if exito %}
+		<div class="">
+			<div class="alert alert-block alert-success">
+				<button type="button" class="close" data-dismiss="alert">
+					<i class="icon-remove"></i>
+				</button>
+				<p><h4>Datos de acceso de <b>"{{ nombre }}"</b></h4></p>
+				<p><h3><b>Usuario:</b> {{ usuario }} </h3></p>
+				<p><h3><b>Contraseña:</b> {{ password }} </h3></p>
+			</div>
+		</div>
+		</hr>
+	{% endif %}
+	<form method="POST" class="form-horizontal" role="form" {% if formulario.is_multipart %}enctype="multipart/form-data"{% endif %}>
+		{{ form.non_field_errors }}
+		{% if mensaje %}<div class="alert alert-danger">{{ mensaje }}</div>{% endif %}
+		{% csrf_token %}
+		<fieldset>
+			<div class="form-group">
+
+				<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.identidad.label_tag }}
+				</label>
+
+				<div class="col-sm-9">
+					{{ formulario.identidad }}
+					{{ formulario.identidad.errors }}
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.nombres.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.nombres }}
+					{{ formulario.nombres.errors }}
+				</div>
+		 	</div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.apellidos.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.apellidos}}
+					{{ formulario.apellidos.errors }}
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.departamento.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.departamento }}
+					<!-- Texto de ayuda -->
+					&nbsp;&nbsp;&nbsp;<span class="badge badge-info tooltip-info" title="" data-placement="right" data-rel="tooltip" data-original-title="Seleccione el departamento donde labora."><i class="icon-info white"></i></span>
+					<!-- Fin de texto de ayuda -->
+					{{ formulario.departamento.errors }}
+					
+				</div>
+		 	</div>
+
+		 	<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.telefono.label_tag }}</label>
+
+				<div class="col-sm-9">
+					{{ formulario.telefono }}
+					{{ formulario.telefono.errors }}
+				</div>
+		 	</div>
+
+			<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit">
+					<i class="icon-ok bigger-110"></i>
+					Guardar
+					</button>
+					&nbsp; &nbsp; &nbsp;
+					<a class="btn" href="{% url 'vista_inicio' %}">
+						<i class="icon-list-alt bigger-110"></i>
+						Menú
+					</a>
+				</div>
+			</div>
+
+			<div class="space-4"></div>
+		</fieldset>
+	</form>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			{% if exito %}
+				$.gritter.add({
+						title: '¡Éxito!',
+						text: 'El usuario ha sido creado exitosamente. Por favor anote los datos de acceso.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-success gritter-center' + (!$('#gritter-center').get(0).checked ? ' gritter-success gritter-center' : '')
+				});
+			{% endif %}
+			{% if error %}
+				$.gritter.add({
+						title: '¡Falló!',
+						text: 'Ocurrió un error al guardar los datos, por favor revise la información digitada.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+				});
+			{% endif %}
+
+			$('[data-rel=tooltip]').tooltip();
+		});
+	</script>
+{% endblock %}

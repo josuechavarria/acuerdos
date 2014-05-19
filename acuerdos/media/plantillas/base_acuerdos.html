@@ -160,23 +160,27 @@
 
 							<ul class="submenu">
 								<li>
+									<a href="{% url 'vista_dd_plazas_listar' %}">
+										<i class="icon-double-angle-right"></i>
+										Listar disponibles
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-edit"></i>
+								<span class="menu-text"> Acuerdos </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
 									<a href="{% url 'vista_plazas_nuevo' %}">
 										<i class="icon-double-angle-right"></i>
-										Registrar
-									</a>
-								</li>
-
-								<li>
-									<a href="{% url 'vista_plazas_listar' %}">
-										<i class="icon-double-angle-right"></i>
-										Listar
-									</a>
-								</li>
-
-								<li>
-									<a href="wysiwyg.html">
-										<i class="icon-double-angle-right"></i>
-										Reportes
+										Crear
 									</a>
 								</li>
 							</ul>
@@ -245,27 +249,25 @@
 												<i class="icon-user"></i>
 												
 											</span>
-											Bienvenido
+											Dirección departamental de {{ departamento }} - Bienvenido
 										</h1>
 
 										<hr />
-										<h3 class="lighter smaller">En esta página usted podrá notificar de la disponibilidad de una vacante en su centro educativo.</h3>
+										<h3 class="lighter smaller">En esta página usted podrá ingresar y realizar el seguimiento de los acuerdos administrados en su departamento.</h3>
 
 										<div>
 											
 											<h4 class="smaller">Intente comenzar con alguna de estas tareas:</h4>
 
 											<ul class="list-unstyled spaced inline bigger-110 margin-15">
-												<li class="alert alert-success">
-													<i class="icon-plus green bigger-130"></i>
-													<a href="{% url 'vista_plazas_nuevo' %}">Registrar una plaza disponible en el centro</a> "{{centro}}"
-												</li>
-
 												<li class="alert alert-info">
 													<i class="icon-list green bigger-130"></i>
-													<a href="{% url 'vista_plazas_listar' %}">Listar las plazas que se han publicado en el centro</a>
+													<a href="{% url 'vista_dd_plazas_listar' %}">Listar las plazas que se han publicado en el departamento</a>
 												</li>
-
+												<li class="alert alert-success">
+													<i class="icon-plus green bigger-130"></i>
+													<a href="{% url 'vista_plazas_nuevo' %}">Ingresar un acuerdo para una plaza disponible</a>
+												</li>
 												<li class="alert alert-warning">
 													<i class="icon-off green bigger-130"></i>
 													<a>Terminar la sesión</a>

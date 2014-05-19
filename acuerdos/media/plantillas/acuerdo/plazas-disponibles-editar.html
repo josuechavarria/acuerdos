@@ -42,12 +42,7 @@
 
 				<div class="col-sm-9">
 					{{ formulario.nivel_educativo.errors }}
-					<select id="id_nivel_educativo" name="nivel_educativo">
-					    <option value="">---------</option>
-					    {% for s in subnivel %}
-					    	<option {% if s.sub_niveleducativo.id == nivel %} selected="selected" {% endif %} value="{{ s.sub_niveleducativo.id }}">{{ s.sub_niveleducativo.nivel_educativo.nombre }} - {{ s.sub_niveleducativo.nombre }} </option>
-					    {% endfor %}
-					</select>
+					{{ formulario.nivel_educativo }}
 				</div>
 		 	</div>
 
@@ -67,12 +62,7 @@
 				<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> {{ formulario.jornada.label_tag }}</label>
 
 				<div class="col-sm-9">
-					<select id="id_jornada" name="jornada" multiple="" class="width-40  chosen-select" data-placeholder="Elija una jornada...">
-						{% for j in jornada %}
-						    <option value="">&nbsp;</option>
-						    <option {% for jc in jornadas_centro  %} {% if jc.id == j.jornada.id %} selected="selected" {% endif %} {% endfor %} value="{{ j.jornada.id }}">{{ j.jornada.descripcion }}</option>
-					    {% endfor %}
-					</select>
+					{{ formulario.jornada }}
 					<!-- Texto de ayuda -->
 					&nbsp;&nbsp;&nbsp;<span class="badge badge-info tooltip-info" title="" data-placement="right" data-rel="tooltip" data-original-title="Puede elegir mas de una jornada."><i class="icon-info white"></i></span>
 					<!-- Fin de texto de ayuda -->
