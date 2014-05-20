@@ -8,4 +8,5 @@ urlpatterns=patterns('acuerdos.acuerdo.views',
 		url(r'^inicio/menu-plazas/eliminar-plaza/(?P<plaza_id>\d+)/$', 'view_plazas_eliminar', name='vista_plazas_eliminar'),
 		url(r'^inicio/menu-plazas/listar-plazas$', 'view_plazas_listar', name='vista_plazas_listar'),
 		url(r'^inicio/menu-acuerdos/listar-plazas$', 'view_dd_plazas_listar', name='vista_dd_plazas_listar'),
+		url(r'^inicio/menu-acuerdos/nuevo-acuerdo-basica/(?P<plaza_id>\d+)/$', 'view_acuerdo_basica_nuevo', name='vista_acuerdo_basica_nuevo'),
 )

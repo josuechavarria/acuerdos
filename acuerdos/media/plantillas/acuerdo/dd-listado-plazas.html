@@ -57,7 +57,7 @@
 																</a>
 															{% endif %}
 															{% if perms.acuerdo.add_plazas_disponibles %}
-																<a data-placement="left" data-rel="tooltip" data-original-title="Crea un acuerdo para esta plaza." class="blue tooltip-info" href="{% url 'vista_plazas_nuevo' %}">
+																<a data-placement="left" data-rel="tooltip" data-original-title="Crea un acuerdo para esta plaza." class="blue tooltip-info" href="{% url 'vista_acuerdo_basica_nuevo' p.pk %}">
 																	<i class="icon-plus-sign purple bigger-130"></i> Crear Acuerdo
 																</a>
 															{% endif %}

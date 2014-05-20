@@ -152,3 +152,29 @@ def view_dd_plazas_listar(request):
 	return render_to_response('acuerdo/dd-listado-plazas.html', ctx, context_instance=RequestContext(request))
 
 
+@permission_required('acuerdo.add_acuerdo_basica', login_url='/inicio/')
+def view_acuerdo_basica_nuevo(request, plaza_id):
+	#recuperar datos del centro
+		if request.method == 'POST':
+			print "salvando1"
+			formulario = PlazasForm(subnivel, jornada, request.POST)		
+			if formulario.is_valid():
+				print "salvando"
+				form = formulario.save(commit = False)
+				form.visible=True
+				form.usuario_modificador = request.user
+				form.fecha_modificacion = datetime.now()
+				form.save()
+				formulario.save_m2m()
+				#retornar exito
+				formulario = PlazasForm(subnivel, jornada)
+				ctx = {'formulario': formulario, 'codigo_centro': centro.centro.codigo[:9], 'nombre_centro': centro.centro.nombre, 'exito':"si"}
+				return render_to_response('acuerdo/plazas-disponibles-nuevo.html', ctx, context_instance=RequestContext(request))
+			else:
+				ctx = {'formulario':formulario, 'codigo_centro': centro.centro.codigo[:9], 'nombre_centro': centro.centro.nombre, 'error':'cx'}
+				return render_to_response('acuerdo/plazas-disponibles-nuevo.html', ctx, context_instance=RequestContext(request)) 
+		
+		else:
+			formulario = AcuerdoBasicaForm()
+			ctx = {'formulario': formulario}
+			return render_to_response('acuerdo/acuerdo-basica-nuevo.html', ctx, context_instance=RequestContext(request))
