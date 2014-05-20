@@ -1,0 +1,247 @@
+{% extends "base_acuerdos.html" %}
+
+{% block ubicacion %}
+	<li class="active">
+		<a href="#">Nuevo acuerdo</a>
+	</li>
+{% endblock %}
+
+{% block header %}
+	Nuevo Acuerdo de Prebásica/Básica
+{% endblock %}
+
+{% block content %}
+	<form method="POST" class="form-horizontal" role="form" {% if formulario.is_multipart %}enctype="multipart/form-data"{% endif %}>
+		{{ form.non_field_errors }}
+		{% if mensaje %}<div class="alert alert-danger">{{ mensaje }}</div>{% endif %}
+		{% csrf_token %}
+		
+		<p class="header bigger-120 lighter dark">Datos del acuerdo</p>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="form-group">
+
+					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.movimiento.label_tag }}
+					</label>
+
+					<div class="col-sm-9">
+						{{ formulario.movimiento }}
+						{{ formulario.movimiento.errors }}
+					</div>
+			 	</div>
+			</div>
+			<div class="col-xs-3">
+				<div class="form-group">
+					<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.accion.label_tag }}
+					</label>
+					<div class="col-sm-7">
+						{{ formulario.accion }}
+						{{ formulario.accion.errors }}
+					</div>
+				</div>
+			</div>			
+			<div class="col-xs-5">
+				<div class="form-group pull-rigth">
+
+					<label class="col-sm-4 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.fecha.label_tag }}
+					</label>
+
+					<div class="col-sm-8">
+						<div class="input-group">
+							{{ formulario.fecha }}
+							<span class="input-group-addon">
+								<i class="icon-calendar bigger-110"></i>
+							</span>
+							{{ formulario.fecha.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="form-group">
+
+					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> Acuerdo No.
+					</label>
+
+					<div class="col-sm-9">
+						<b>XXXX-DDEA-XXXX-XX</b>
+					</div>
+			 	</div>
+			</div>			
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.vigencia_desde.label_tag }}
+					</label>
+
+					<div class="col-sm-9">
+						<div class="input-group">
+							{{ formulario.vigencia_desde }}
+							<span class="input-group-addon">
+								<i class="icon-calendar bigger-110"></i>
+							</span>
+							{{ formulario.vigencia_desde.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.vigencia_hasta.label_tag }}
+					</label>
+
+					<div class="col-sm-9">
+						<div class="input-group">
+							{{ formulario.vigencia_hasta }}
+							<span class="input-group-addon">
+								<i class="icon-calendar bigger-110"></i>
+							</span>
+							{{ formulario.vigencia_hasta.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>		
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.estado.label_tag }}
+					</label>
+
+					<div class="col-sm-8">
+							{{ formulario.estado }}
+							{{ formulario.estado.errors }}
+					</div>
+			 	</div>
+			</div>
+		</div>
+		<p class="header bigger-120 lighter green">Datos del docente</p>
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.identidad_docente.label_tag }}
+					</label>
+
+					<div class="col-sm-7">
+						<div class="input-group">
+							{{ formulario.identidad_docente }}
+							<span class="input-group-addon">
+								<a href="#"><i class="icon-search bigger-110"></i> Buscar</a>
+							</span>
+							{{ formulario.identidad_docente.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.clave_escalafon_docente.label_tag }}
+					</label>
+
+					<div class="col-sm-7">
+						<div class="input-group">
+							{{ formulario.clave_escalafon_docente }}
+							<span class="input-group-addon">
+								<a href="#"><i class="icon-search bigger-110"></i> Buscar</a>
+							</span>
+							{{ formulario.clave_escalafon_docente.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>		
+			<div class="col-xs-4">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.nombres_docente.label_tag }}
+					</label>
+
+					<div class="col-sm-9">
+						<div class="input-group">
+							{{ formulario.nombres_docente }}
+							{{ formulario.nombres_docente.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.apellidos_docente.label_tag }}
+					</label>
+
+					<div class="col-sm-9">
+						<div class="input-group">
+							{{ formulario.apellidos_docente }}
+							{{ formulario.apellidos_docente.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>		
+			<div class="col-xs-4">
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.fecha_nacimiento_docente.label_tag }}
+					</label>
+
+					<div class="col-sm-9">
+						<div class="input-group">
+							{{ formulario.fecha_nacimiento_docente }}
+							{{ formulario.fecha_nacimiento_docente.errors }}
+						</div>
+					</div>
+			 	</div>
+			</div>
+		</div>
+		<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit">
+					<i class="icon-ok bigger-110"></i>
+					Guardar
+					</button>
+					&nbsp; &nbsp; &nbsp;
+					<a class="btn" href="{% url 'vista_dd_plazas_listar' %}">
+						<i class="icon-list-alt bigger-110"></i>
+						Listado
+					</a>
+				</div>
+		</div>
+
+		<div class="space-4"></div>
+	</form>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#id_codigo_centro").val("{{codigo_centro}}")
+			$( "#id_codigo_centro" ).attr('readonly','readonly');
+			{% if exito %}
+				$.gritter.add({
+						title: '¡Éxito!',
+						text: 'Su información ha sido almacenada exitosamente.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-success gritter-center' + (!$('#gritter-center').get(0).checked ? ' gritter-success gritter-center' : '')
+				});
+			{% endif %}
+			{% if error %}
+				$.gritter.add({
+						title: '¡Falló!',
+						text: 'Ocurrió un error al guardar los datos, por favor revise la información digitada.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+				});
+			{% endif %}
+			$('#id_horas').ace_spinner({value:1,min:1,max:100,step:1, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+				.on('change', function(){
+					//alert(this.value)
+				});
+			$(".chosen-select").chosen();
+			$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+			$('[data-rel=tooltip]').tooltip();
+		});
+	</script>
+{% endblock %}

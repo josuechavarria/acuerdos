@@ -8,7 +8,7 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
-from acuerdos.general.models import estados_plaza,cargos,motivos, niveles_educativos, subniveles_educativos, jornadas, tipos_movimientos
+from acuerdos.general.models import *
 
 # Create your models here.
 
@@ -60,25 +60,45 @@ class plazas_disponibles(models.Model):
 		)
 		verbose_name_plural = "plazas disponibles"
 
-class acuerdo(models.Model):
+class acuerdo_basica(models.Model):
 	#infomacion general del acuerdo
-	accion=models.CharField(max_length=30)
+	plaza_disponible=models.ForeignKey(plazas_disponibles)
+	accion=models.CharField(max_length=30, verbose_name="Acción No.")
 	fecha=models.DateField(default=datetime.now())
-	movimiento=models.ForeignKey(tipos_movimientos)
+	movimiento=models.ForeignKey(subtipos_acuerdos)
 	vigencia_desde=models.DateField()
 	vigencia_hasta=models.DateField(default=None, null=True)
 	#infomacion del docente
-	clave_escalafon_docente=models.CharField(max_length=15)
-	nombres_docente=models.CharField(max_length=45)
-	apellidos_docente=models.CharField(max_length=45)
-	identidad_docente=models.CharField(max_length=13)
+	clave_escalafon_docente=models.CharField(max_length=15, verbose_name="Clave de escalafon")
+	nombres_docente=models.CharField(max_length=45, verbose_name="Nombres")
+	apellidos_docente=models.CharField(max_length=45, verbose_name="Apellidos")
+	identidad_docente=models.CharField(max_length=13, verbose_name="Identidad")
 	sexo_docente=models.CharField(max_length=10)
-	fecha_nacimiento_docente=models.DateField()
-	
-	estado_docente=models.CharField(max_length=25)
+	fecha_nacimiento_docente=models.DateField(verbose_name="Fecha Nacimiento")
+	colegio1=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_b_colegio1")
+	colegio2=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_b_colegio2")
+	numero_imprema=models.CharField(max_length=15)
+	estado_docente=models.CharField(max_length=25, verbose_name="Estado del docente")
 	#informacion del centro educativo
+	cargo=models.ForeignKey(cargos)
 	codigo_centro=models.CharField(max_length=9, verbose_name="Código estadístico")
-	nombre_centro=models.CharField(max_length=255, verbose_name="Nombre Centro")
+	nombre_centro=models.CharField(max_length=255, verbose_name="Escuela")
+	departamento=models.ForeignKey(departamento)
+	municipio=models.ForeignKey(municipio)
+	aldea=models.ForeignKey(aldea)
+	#informacion de la plaza
+	estructura_plaza=models.CharField(max_length=15)
+	justificacion=models.TextField()
+	estado=models.CharField(max_length=35, verbose_name="Estado del acuerdo")
+	usuario_creador=models.ForeignKey(User, related_name='acuerdo_basica_usuario_creador')
+	fecha_creacion=models.DateField(default=datetime.now())
+	usuario_modificador=models.ForeignKey(User, related_name='acuerdo_basica_usuario_modificador')
+	fecha_modificacion=models.DateField(default=datetime.now())
 
-
-	
+	class Meta:
+		permissions = (
+			("can_view_acuerdos", "Puede entrar a admon de acuerdos"),
+			("can_view_acuerdos_basica", "Puede entrar a admon de acuerdos basica"),
+			("can_view_acuerdos_media", "Puede entrar a admon de acuerdos media"),
+		)
+		verbose_name_plural = "Acuerdos de basica"
