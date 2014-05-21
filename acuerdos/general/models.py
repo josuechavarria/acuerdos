@@ -30,7 +30,7 @@ class aldea(models.Model):
 	municipio=models.ForeignKey(municipio)
 
 	def __unicode__(self):
-		return self.descripcion
+		return '%s | %s' % (self.codigo_aldea,self.descripcion)
 
 	class Meta:
 		unique_together = ('codigo_departamento','codigo_municipio', 'codigo_aldea')

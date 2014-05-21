@@ -147,17 +147,41 @@ def view_dd_plazas_listar(request):
 			'telefono_director': director.telefono,
 			'correo_director': director.correo
 		})
-	print plazas_centros
+	#print plazas_centros
 	ctx = {'plazas': plazas_centros}
 	return render_to_response('acuerdo/dd-listado-plazas.html', ctx, context_instance=RequestContext(request))
 
 
 @permission_required('acuerdo.add_acuerdo_basica', login_url='/inicio/')
 def view_acuerdo_basica_nuevo(request, plaza_id):
-	#recuperar datos del centro
+		#recuperar datos de la plaza
+		plazas=plazas_disponibles.objects.filter(pk=plaza_id, visible=True, disponible=True)
+		plazas_centros=[]
+		for p in plazas:
+			centro=SecretariaCentroeducativo.objects.using("sace").get(codigo__startswith=p.codigo_centro)
+			plazas_centros.append({
+				'pk': p.pk,
+				'departamento_id': centro.departamento.id,
+				'codigo_departamento': centro.departamento.codigo,
+				'municipio_id': centro.municipio.id,
+				'codigo_municipio': centro.municipio.codigo,
+				'municipio': centro.municipio.nombre,
+				'aldea_id': centro.aldea.id,
+				'codigo_aldea': centro.aldea.codigo,
+				'aldea': centro.aldea.nombre,
+				'codigo_centro': p.codigo_centro,
+				'nombre_centro': centro.nombre,
+				'direccion_centro': centro.direccion_completa,
+				'nivel_educativo': p.nivel_educativo,
+				'cargo': p.cargo,
+				'jornada': p.jornada,
+				'motivo': p.motivo,
+				'horas': p.horas,
+			})
+		#print plazas_centros[0].get("codigo_departamento")
 		if request.method == 'POST':
 			print "salvando1"
-			formulario = PlazasForm(subnivel, jornada, request.POST)		
+			formulario = PlazasForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"), request.POST)		
 			if formulario.is_valid():
 				print "salvando"
 				form = formulario.save(commit = False)
@@ -167,14 +191,11 @@ def view_acuerdo_basica_nuevo(request, plaza_id):
 				form.save()
 				formulario.save_m2m()
 				#retornar exito
-				formulario = PlazasForm(subnivel, jornada)
+				formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"))
 				ctx = {'formulario': formulario, 'codigo_centro': centro.centro.codigo[:9], 'nombre_centro': centro.centro.nombre, 'exito':"si"}
-				return render_to_response('acuerdo/plazas-disponibles-nuevo.html', ctx, context_instance=RequestContext(request))
 			else:
-				ctx = {'formulario':formulario, 'codigo_centro': centro.centro.codigo[:9], 'nombre_centro': centro.centro.nombre, 'error':'cx'}
-				return render_to_response('acuerdo/plazas-disponibles-nuevo.html', ctx, context_instance=RequestContext(request)) 
-		
+				ctx = {'formulario':formulario, 'codigo_centro': centro.centro.codigo[:9], 'nombre_centro': centro.centro.nombre, 'error':'cx'}		
 		else:
-			formulario = AcuerdoBasicaForm()
-			ctx = {'formulario': formulario}
-			return render_to_response('acuerdo/acuerdo-basica-nuevo.html', ctx, context_instance=RequestContext(request))
+			formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"))
+			ctx = {'formulario': formulario, 'plaza': plazas_centros[0]}
+		return render_to_response('acuerdo/acuerdo-basica-nuevo.html', ctx, context_instance=RequestContext(request))

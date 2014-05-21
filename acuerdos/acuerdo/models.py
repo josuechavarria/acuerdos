@@ -80,7 +80,7 @@ class acuerdo_basica(models.Model):
 	numero_imprema=models.CharField(max_length=15)
 	estado_docente=models.CharField(max_length=25, verbose_name="Estado del docente")
 	#informacion del centro educativo
-	cargo=models.ForeignKey(cargos)
+	cargo=models.ForeignKey(cargos, verbose_name="Cargo a ocupar")
 	codigo_centro=models.CharField(max_length=9, verbose_name="Código estadístico")
 	nombre_centro=models.CharField(max_length=255, verbose_name="Escuela")
 	departamento=models.ForeignKey(departamento)
