@@ -29,13 +29,13 @@ class AcuerdoBasicaForm(ModelForm):
 	class Meta:
 		model = acuerdo_basica
 		exclude = ('plaza_disponible','usuario_creador', 'fecha_creacion', 'usuario_modificador', 'fecha_modificacion')
-	accion = forms.CharField(label="Acción No ",widget=forms.TextInput(attrs={'size': '10', 'required':'required', 'pattern': '[0-9]{4,4}', 'title':'El número de acción debe tener 4 dígitos.'}))
+	accion = forms.CharField(label="Acción #",widget=forms.TextInput(attrs={'size': '10', 'required':'required', 'pattern': '[0-9]{4,4}', 'title':'El número de acción debe tener 4 dígitos.'}))
 	fecha = forms.CharField(label="Fecha parámetro",widget=forms.TextInput(attrs={'required':'required', 'class':'form-control date-picker', 'data-date-format':'dd/mm/yyyy'}))
 	vigencia_desde = forms.DateField(label="Vigencia desde el",widget=forms.DateInput(attrs={'required':'required', 'class':'form-control date-picker', 'data-date-format':'dd/mm/yyyy'}))
 	vigencia_hasta = forms.DateField(label="Hasta",widget=forms.DateInput(attrs={'required':'required', 'class':'form-control date-picker', 'data-date-format':'dd/mm/yyyy'}))
 	nombres_docente = forms.CharField(label="Nombres",widget=forms.TextInput(attrs={'size': '30', 'readonly':'readonly', 'required':'required', 'pattern': '[a-zA-Z]{3,45}', 'title':'El nombre del docente no es permitido.'}))
 	apellidos_docente = forms.CharField(label="Apellidos",widget=forms.TextInput(attrs={'size': '30', 'readonly':'readonly', 'required':'required', 'pattern': '[a-zA-Z]{3,45}', 'title':'El nombre del docente no es permitido.'}))
-	identidad_docente = forms.CharField(label="Identidad",widget=forms.TextInput(attrs={'size': '15', 'required':'required', 'pattern': '[0-9]{13,13}', 'title':'El número de identidad debe ser numérico y de 13 dígitos.'}))
+	identidad_docente = forms.CharField(label="Identidad",widget=forms.TextInput(attrs={'class':'form-control', 'size': '18', 'required':'required', 'pattern': '[0-9]{13,13}', 'title':'El número de identidad debe ser numérico y de 13 dígitos.'}))
 	fecha_nacimiento_docente = forms.CharField(label="Fecha Nacimiento",widget=forms.TextInput(attrs={'required':'required', 'readonly':'readonly', 'class':'form-control date-picker', 'data-date-format':'dd/mm/yyyy'}))
 	departamento = forms.ModelChoiceField(queryset=departamento.objects.all())
 	municipio = forms.ModelChoiceField(queryset=municipio.objects.all())

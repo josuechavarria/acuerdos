@@ -3,11 +3,12 @@
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.contrib.auth.models import Group
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import permission_required, login_required
 from acuerdos.acuerdo.forms import *
+from datetime import datetime
 
 from acuerdos.acuerdo.models_siarhd import *
 from acuerdos.acuerdo.models_sace import *
@@ -181,7 +182,7 @@ def view_acuerdo_basica_nuevo(request, plaza_id):
 		#print plazas_centros[0].get("codigo_departamento")
 		if request.method == 'POST':
 			print "salvando1"
-			formulario = PlazasForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"), request.POST)		
+			formulario = PlazasForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"), request.POST)
 			if formulario.is_valid():
 				print "salvando"
 				form = formulario.save(commit = False)
@@ -199,3 +200,16 @@ def view_acuerdo_basica_nuevo(request, plaza_id):
 			formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"))
 			ctx = {'formulario': formulario, 'plaza': plazas_centros[0]}
 		return render_to_response('acuerdo/acuerdo-basica-nuevo.html', ctx, context_instance=RequestContext(request))
+
+@login_required
+def view_recuperar_docente(request):
+	if request.method == 'POST':
+		identidad= request.POST.get('identidad')
+		docente=PpEmpleados.objects.using('siarhd').get(identidad_empleado=identidad)
+		print docente.fecha_nacimiento.strftime('%Y-%m-%d')
+		print docente.clave_escalafon
+		html=""+docente.nombres_empleado+","+docente.apellidos_empleado+","+str(docente.fecha_nacimiento.strftime('%d/%m/%Y'))+","+str(docente.clave_escalafon)+","+ str(docente.codigo_inprema)
+		#print docente.nombres_empleado
+		return HttpResponse(html)
+	else:
+		return HttpResponse(0)
