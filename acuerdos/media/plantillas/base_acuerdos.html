@@ -383,26 +383,25 @@
 		<script src="/media/estaticos/js/fuelux/fuelux.spinner.min.js"></script>
 		<script src="/media/estaticos/js/bootbox.min.js"></script>
 		<script src="/media/estaticos/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="/media/estaticos/js/jquery.maskedinput.min.js"></script>
 
 
 		<!-- inline scripts related to this page -->
 		{% block extrajs %}
 		<script type="text/javascript">
-		 jQuery(function($) {
-			$('document').ready(function(){
-					$.gritter.add({
-						title: '¡Bienvenido {{ user.first_name }}!',
-						text: 'Intenta comenzar con alguna de las tareas que se te presentan. Recuerda terminar tu sesión cuando finalices.',
-						sticky: false,
-						time: '',
-						class_name: 'gritter-info' + (!$('#gritter-center').get(0).checked ? ' gritter-info' : '')
+			 jQuery(function($) {
+				$('document').ready(function(){
+						$.gritter.add({
+							title: '¡Bienvenido {{ user.first_name }}!',
+							text: 'Intenta comenzar con alguna de las tareas que se te presentan. Recuerda terminar tu sesión cuando finalices.',
+							sticky: false,
+							time: '',
+							class_name: 'gritter-info' + (!$('#gritter-center').get(0).checked ? ' gritter-info' : '')
+						});
+
 					});
-
-			
-					return false;
-				});
-
-		    });
+				
+			 });
 		</script>
 		{% endblock %}
 	</body>

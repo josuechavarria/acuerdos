@@ -77,10 +77,10 @@ class acuerdo_basica(models.Model):
 	fecha_nacimiento_docente=models.DateField(verbose_name="Fecha Nacimiento")
 	colegio1=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_b_colegio1")
 	colegio2=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_b_colegio2")
-	numero_imprema=models.CharField(max_length=15)
+	numero_imprema=models.CharField(max_length=15, verbose_name="Número INPREMA")
 	estado_docente=models.CharField(max_length=25, verbose_name="Estado del docente")
 	#informacion del centro educativo
-	cargo=models.ForeignKey(cargos)
+	cargo=models.ForeignKey(cargos, verbose_name="Cargo a ocupar")
 	codigo_centro=models.CharField(max_length=9, verbose_name="Código estadístico")
 	nombre_centro=models.CharField(max_length=255, verbose_name="Escuela")
 	departamento=models.ForeignKey(departamento)
@@ -89,7 +89,7 @@ class acuerdo_basica(models.Model):
 	#informacion de la plaza
 	estructura_plaza=models.CharField(max_length=15)
 	justificacion=models.TextField()
-	estado=models.CharField(max_length=35, verbose_name="Estado del acuerdo")
+	estado=models.CharField(max_length=35, verbose_name="Estado")
 	usuario_creador=models.ForeignKey(User, related_name='acuerdo_basica_usuario_creador')
 	fecha_creacion=models.DateField(default=datetime.now())
 	usuario_modificador=models.ForeignKey(User, related_name='acuerdo_basica_usuario_modificador')

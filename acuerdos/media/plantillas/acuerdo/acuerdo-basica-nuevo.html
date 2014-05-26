@@ -11,42 +11,54 @@
 {% endblock %}
 
 {% block content %}
-	<form method="POST" class="form-horizontal" role="form" {% if formulario.is_multipart %}enctype="multipart/form-data"{% endif %}>
+	<form method="POST" id="frm_acuerdo" class="form-horizontal" role="form" {% if formulario.is_multipart %}enctype="multipart/form-data"{% endif %}>
 		{{ form.non_field_errors }}
 		{% if mensaje %}<div class="alert alert-danger">{{ mensaje }}</div>{% endif %}
 		{% csrf_token %}
-		
-		<p class="header bigger-120 lighter dark">Datos del acuerdo</p>
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="green"><i class="icon-file bigger-130"></i>  Datos del acuerdo</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-up"></i>
+					</a>
+				</span>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
 		<div class="row">
 			<div class="col-xs-12">
-				<div class="form-group">
-
-					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.movimiento.label_tag }}
-					</label>
-
-					<div class="col-sm-9">
-						{{ formulario.movimiento }}
-						{{ formulario.movimiento.errors }}
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.movimiento.label_tag }}
 					</div>
-			 	</div>
+					<div class="col-sm-10 pull-left">
+							{{ formulario.movimiento }}
+							{{ formulario.movimiento.errors }}
+					</div>
+				</p>
+			 	
 			</div>
-			<div class="col-xs-3">
-				<div class="form-group">
-					<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.accion.label_tag }}
-					</label>
-					<div class="col-sm-7">
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						 {{ formulario.accion.label_tag }}
+					</div>
+					<div class="col-sm-10 pull-left">
 						{{ formulario.accion }}
 						{{ formulario.accion.errors }}
 					</div>
-				</div>
+				</p>
+				
 			</div>			
-			<div class="col-xs-5">
-				<div class="form-group pull-rigth">
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.fecha.label_tag }}
+					</div>
 
-					<label class="col-sm-4 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.fecha.label_tag }}
-					</label>
-
-					<div class="col-sm-8">
+					<div class="col-sm-3">
 						<div class="input-group">
 							{{ formulario.fecha }}
 							<span class="input-group-addon">
@@ -55,27 +67,29 @@
 							{{ formulario.fecha.errors }}
 						</div>
 					</div>
-			 	</div>
+			 	</p>
 			</div>
-			<div class="col-xs-4">
-				<div class="form-group">
-
-					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> Acuerdo No.
-					</label>
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						<label class="no-padding-right" for="id_codigo_centro"> Acuerdo #:
+						</label>
+					</div>
 
 					<div class="col-sm-9">
 						<b>XXXX-DDEA-XXXX-XX</b>
 					</div>
-			 	</div>
+			 	</p>
 			</div>			
 		</div>
 		<div class="row">
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.vigencia_desde.label_tag }}
-					</label>
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.vigencia_desde.label_tag }}
+					</div>
 
-					<div class="col-sm-9">
+					<div class="col-sm-3">
 						<div class="input-group">
 							{{ formulario.vigencia_desde }}
 							<span class="input-group-addon">
@@ -84,14 +98,15 @@
 							{{ formulario.vigencia_desde.errors }}
 						</div>
 					</div>
-			 	</div>
+			 	</p>
 			</div>
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.vigencia_hasta.label_tag }}
-					</label>
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.vigencia_hasta.label_tag }}
+					</div>
 
-					<div class="col-sm-9">
+					<div class="col-sm-3">
 						<div class="input-group">
 							{{ formulario.vigencia_hasta }}
 							<span class="input-group-addon">
@@ -100,96 +115,323 @@
 							{{ formulario.vigencia_hasta.errors }}
 						</div>
 					</div>
-			 	</div>
+			 	</p>
 			</div>		
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-4 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.estado.label_tag }}
-					</label>
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						 {{ formulario.estado.label_tag }}
+					</div>
 
-					<div class="col-sm-8">
+					<div class="col-sm-3">
 							{{ formulario.estado }}
 							{{ formulario.estado.errors }}
 					</div>
-			 	</div>
+			 	</p>
 			</div>
 		</div>
-		<p class="header bigger-120 lighter green">Datos del docente</p>
-		<div class="row">
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.identidad_docente.label_tag }}
-					</label>
-
-					<div class="col-sm-7">
-						<div class="input-group">
-							{{ formulario.identidad_docente }}
-							<span class="input-group-addon">
-								<a href="#"><i class="icon-search bigger-110"></i> Buscar</a>
-							</span>
-							{{ formulario.identidad_docente.errors }}
-						</div>
-					</div>
-			 	</div>
-			</div>
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.clave_escalafon_docente.label_tag }}
-					</label>
-
-					<div class="col-sm-7">
-						<div class="input-group">
-							{{ formulario.clave_escalafon_docente }}
-							<span class="input-group-addon">
-								<a href="#"><i class="icon-search bigger-110"></i> Buscar</a>
-							</span>
-							{{ formulario.clave_escalafon_docente.errors }}
-						</div>
-					</div>
-			 	</div>
-			</div>		
-			<div class="col-xs-4">
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.nombres_docente.label_tag }}
-					</label>
-
-					<div class="col-sm-9">
-						<div class="input-group">
-							{{ formulario.nombres_docente }}
-							{{ formulario.nombres_docente.errors }}
-						</div>
-					</div>
-			 	</div>
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="blue"><i class="icon-user bigger-130"></i>   Datos del docente</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-down"></i>
+					</a>
+				</span>
 			</div>
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.apellidos_docente.label_tag }}
-					</label>
 
-					<div class="col-sm-9">
-						<div class="input-group">
-							{{ formulario.apellidos_docente }}
-							{{ formulario.apellidos_docente.errors }}
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row">
+						<div class="col-xs-5">
+							<div class="form-group">
+								<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.identidad_docente.label_tag }}
+								</label>
+
+								<div class="col-sm-7">
+									<div class="input-group">
+										{{ formulario.identidad_docente }}
+										<span class="input-group-btn">
+											<button type="button" id="busca_identidad" class="btn btn-primary btn-sm">Buscar <i class="icon-search bigger-110"></i></button>
+										</span>
+										{{ formulario.identidad_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.clave_escalafon_docente.label_tag }}
+								</label>
+
+								<div class="col-sm-7">
+									<div class="input-group">
+										{{ formulario.clave_escalafon_docente }}
+										<span class="input-group-addon">
+											<a href="#" id="busca_clave">Buscar <i class="icon-search bigger-110"></i></a>
+										</span>
+										{{ formulario.clave_escalafon_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>		
+						<div class="col-xs-3">
 						</div>
 					</div>
-			 	</div>
-			</div>		
-			<div class="col-xs-4">
-				<div class="form-group">
-					<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.fecha_nacimiento_docente.label_tag }}
-					</label>
 
-					<div class="col-sm-9">
-						<div class="input-group">
-							{{ formulario.fecha_nacimiento_docente }}
-							{{ formulario.fecha_nacimiento_docente.errors }}
+					</br>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.nombres_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.nombres_docente }}
+										{{ formulario.nombres_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.apellidos_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.apellidos_docente }}
+										{{ formulario.apellidos_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>	
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.fecha_nacimiento_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.fecha_nacimiento_docente }}
+										{{ formulario.fecha_nacimiento_docente.errors }}
+									</div>
+								</div>
+						 	</div>
 						</div>
 					</div>
-			 	</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.numero_imprema.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.numero_imprema }}
+										{{ formulario.numero_imprema.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.colegio1.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.colegio1 }}
+										{{ formulario.colegio1.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.colegio2.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.colegio2 }}
+										{{ formulario.colegio2.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>		
+							
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.estado_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.estado_docente }}
+										{{ formulario.estado_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>	
+						<div class="col-xs-4">
+						</div>		
+						<div class="col-xs-4">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="red"><i class="icon-flag bigger-130"></i> Datos del centro Educativo</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-down"></i>
+					</a>
+				</span>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row">
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.cargo.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.cargo }}
+										{{ formulario.cargo.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>	
+
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.codigo_centro.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.codigo_centro }}
+										{{ formulario.codigo_centro.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>	
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.nombre_centro.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.nombre_centro }}
+										{{ formulario.nombre_centro.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>		
+						<div class="col-xs-4">
+							<p></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.departamento.label_tag }}
+								</label>
+
+								<div class="col-sm-8">
+									<div class="input-group">
+										{{ formulario.departamento }}
+										{{ formulario.departamento.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.municipio.label_tag }}
+								</label>
+
+								<div class="col-sm-9">
+									<div class="input-group">
+										{{ formulario.municipio }}
+										{{ formulario.municipio.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>		
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.aldea.label_tag }}
+								</label>
+
+								<div class="col-sm-9">
+									<div class="input-group">
+										{{ formulario.aldea }}
+										{{ formulario.aldea.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="purple"><i class="icon-briefcase bigger-130"></i> Estructura de la plaza</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-down"></i>
+					</a>
+				</span>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-7">
+									<div class="input-group">
+										
+										<span class="input-group-addon">
+											<a href="#">Depto</a>
+										</span>
+										<input type="text" required:'required', pattern: '[0-9]{2,2}', title:'Sólo se permiten 2 números.' id="depto_id" name="depto" size="3"/>
+
+										<span class="input-group-addon">
+											<a href="#">Muni</a>
+										</span>
+										<input type="text" required:'required', pattern: '[0-9]{2,2}', title:'Sólo se permiten 2 números.' id="muni_id" name="muni" size="3"/>
+
+										<span class="input-group-addon">
+											<a href="#">Centro</a>
+										</span>
+										<input type="text" required:'required', pattern: '[0-9]{5,5}', title:'Sólo se permiten 5 números.' id="centro_id" name="centro" size="6"/>
+										<span class="input-group-addon">
+											<a href="#">Plaza</a>
+										</span>
+										<input type="text" required:'required', pattern: '[0-9]{6,6}', title:'Sólo se permiten 6 números.' id="numero_plaza_id" name="numero_plaza" size="7"/>
+									</div>
+								</div>
+						 	</div>
+						</div>		
+					</div>
 			</div>
 		</div>
 		<div class="clearfix form-actions">
@@ -233,15 +475,88 @@
 						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
 				});
 			{% endif %}
-			$('#id_horas').ace_spinner({value:1,min:1,max:100,step:1, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
-				.on('change', function(){
-					//alert(this.value)
-				});
 			$(".chosen-select").chosen();
 			$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
 					$(this).prev().focus();
 				});
 			$('[data-rel=tooltip]').tooltip();
+			$.mask.definitions['~']='[+-]';
+					$('.input-mask-2numeros').mask('99');
+					$('.input-mask-5numeros').mask('99999');
+					$('.input-mask-6numeros').mask('999999');
+					$('.input-mask-date').mask('99/99/9999');
+					$('.input-mask-phone').mask('(999) 999-9999');
+
+			$( "#depto_id" ).on( "keyup", function() {
+				if ($( "#depto_id" ).val().length==2){
+					$("#muni_id").focus()
+				}
+			});
+			$( "#muni_id" ).on( "keyup", function() {
+				if ($( "#muni_id" ).val().length==2){
+					$("#centro_id").focus()
+				}
+			});
+			$( "#centro_id" ).on( "keyup", function() {
+				if ($( "#centro_id" ).val().length==5){
+					$("#numero_plaza_id").focus()
+				}
+			});
+			$("#id_codigo_centro").val("{{ plaza.codigo_centro }}")
+			$("#id_nombre_centro").val("{{ plaza.nombre_centro }}")
+
+			//seleccionar por defecto la aldea, municipio, departamento
+			$("#id_departamento option[value="+ {{ plaza.departamento_id }} +"]").attr("selected",true);
+			$("#id_municipio option[value="+ {{ plaza.municipio_id }} +"]").attr("selected",true);
+			$("#id_aldea option[value="+ {{ plaza.aldea_id }} +"]").attr("selected",true);
+
+			$("#busca_identidad").on("click", function(){
+				var expresion = /^[0-9]{13,13}$/;
+				var id = $("#id_identidad_docente").val();
+				if (id.match(expresion)){
+					var identidad_docente=$("#id_identidad_docente").val();
+
+					var sendInfo = $('#frm_acuerdo').serialize()+"&identidad="+identidad_docente;	
+					var request=$.ajax({
+						url: "{% url 'vista_recuperar_docente' %}",
+						type: "POST",
+						data: sendInfo,
+						dataType: "html"
+					});
+					request.done(function( data ) {
+						datos=data.split(",")
+		            	$("#id_nombres_docente").val(datos[0])
+		            	$("#id_apellidos_docente").val(datos[1])
+		            	$("#id_fecha_nacimiento_docente").val(datos[2])
+		            	$("#id_clave_escalafon_docente").val(datos[3])
+		            	$("#id_numero_imprema").val(datos[4])
+		            	$.gritter.add({
+							title: '¡Muy bien!',
+							text: 'Los datos se han encontrado, por favor verifique la información antes de continuar.',
+							sticky: false,
+							time: '',
+							class_name: 'gritter-success gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-success gritter-right' : '')
+						});
+					});
+					request.fail(function( jqXHR, textStatus ) {
+						$.gritter.add({
+						title: '¡Falló!',
+						text: 'El número de identidad no se ha encontrado.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+					});
+					});
+				}else{
+					$.gritter.add({
+						title: '¡Falló!',
+						text: 'El parámetro de búsqueda es incorrecto por favor revise la identidad ingresada.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+					});
+				}
+	        })
 		});
 	</script>
 {% endblock %}
