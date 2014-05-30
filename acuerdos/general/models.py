@@ -71,6 +71,15 @@ class estados_plaza(models.Model):
 	class Meta:
 		verbose_name_plural = "estados de la plaza"
 
+class estados_acuerdo(models.Model):
+	descripcion=models.CharField(max_length=255, verbose_name="descripción")
+
+	def __unicode__(self):
+		return self.descripcion
+
+	class Meta:
+		verbose_name_plural = "estados del acuerdo"
+
 class motivos(models.Model):
 	descripcion=models.CharField(max_length=255, verbose_name="descripción")
 

@@ -8,10 +8,12 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import permission_required, login_required
 from acuerdos.acuerdo.forms import *
+from django.db.models import Q
 from datetime import datetime
 
 from acuerdos.acuerdo.models_siarhd import *
 from acuerdos.acuerdo.models_sace import *
+from acuerdos.acuerdo.models import plazas
 
 @login_required
 def view_plazas_inicio(request):
@@ -48,7 +50,7 @@ def view_plazas_nuevo(request):
 				print "salvando"
 				form = formulario.save(commit = False)
 				form.visible=True
-				form.usuario_modificador = request.user
+				form.usuario_modificador = User.objects.get(pk=request.user.pk)
 				form.fecha_modificacion = datetime.now()
 				form.save()
 				formulario.save_m2m()
@@ -88,7 +90,7 @@ def view_plazas_editar(request, plaza_id=None):
 				print "salvando"
 				form = formulario.save(commit = False)
 				form.visible=True
-				form.usuario_modificador = request.user
+				form.usuario_modificador = User.objects.get(pk=request.user.pk)
 				form.fecha_modificacion = datetime.now()
 				form.save()
 				formulario.save_m2m()
@@ -154,16 +156,21 @@ def view_dd_plazas_listar(request):
 
 
 @permission_required('acuerdo.add_acuerdo_basica', login_url='/inicio/')
-def view_acuerdo_basica_nuevo(request, plaza_id):
+def view_acuerdo_basica_nuevo(request, plaza_id=None):
 		#recuperar datos de la plaza
 		plazas=plazas_disponibles.objects.filter(pk=plaza_id, visible=True, disponible=True)
 		plazas_centros=[]
 		for p in plazas:
 			centro=SecretariaCentroeducativo.objects.using("sace").get(codigo__startswith=p.codigo_centro)
+			if centro.pais_fronterizo is None:
+				frontera="SIN FRONTERA"
+			else:
+				frontera="CON FRONTERA"
 			plazas_centros.append({
 				'pk': p.pk,
 				'departamento_id': centro.departamento.id,
 				'codigo_departamento': centro.departamento.codigo,
+				'departamento': centro.departamento.nombre,
 				'municipio_id': centro.municipio.id,
 				'codigo_municipio': centro.municipio.codigo,
 				'municipio': centro.municipio.nombre,
@@ -174,30 +181,52 @@ def view_acuerdo_basica_nuevo(request, plaza_id):
 				'nombre_centro': centro.nombre,
 				'direccion_centro': centro.direccion_completa,
 				'nivel_educativo': p.nivel_educativo,
-				'cargo': p.cargo,
+				'frontera': frontera,
+				'cargo': p.cargo.id,
 				'jornada': p.jornada,
 				'motivo': p.motivo,
 				'horas': p.horas,
 			})
+
 		#print plazas_centros[0].get("codigo_departamento")
 		if request.method == 'POST':
 			print "salvando1"
-			formulario = PlazasForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"), request.POST)
+			#estructura plaza
+			depto= request.POST.get("depto")
+			muni= request.POST.get("muni")
+			centro= request.POST.get("centro")
+			numero_plaza= request.POST.get("numero_plaza")
+			#estructura presupuestaria
+			inst= request.POST.get("inst")
+			prg= request.POST.get("prg")
+			spro= request.POST.get("spro")
+			fnd= request.POST.get("fnd")
+
+			formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"), plazas_centros[0].get("cargo"), request.POST)
 			if formulario.is_valid():
 				print "salvando"
 				form = formulario.save(commit = False)
-				form.visible=True
-				form.usuario_modificador = request.user
+				#traer la plaza
+				plaza=plazas_disponibles.objects.get(pk=plaza_id, visible=True, disponible=True)
+				form.plaza_disponible=plaza
+				form.estructura_plaza=str(depto)+"-"+str(muni)+"-"+str(centro)+"-"+str(numero_plaza)
+				form.estructura_presupuestaria=str(inst)+"-"+str(prg)+"-"+str(spro)+"-"+str(fnd)
+				form.usuario_creador = User.objects.get(pk=request.user.pk)
+				form.fecha_creacion = datetime.now()
+				form.usuario_modificador = User.objects.get(pk=request.user.pk)
 				form.fecha_modificacion = datetime.now()
 				form.save()
-				formulario.save_m2m()
+				plaza.visible=False
+				plaza.disponible=False
+				plaza.save()
+				#formulario.save_m2m()
 				#retornar exito
-				formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"))
-				ctx = {'formulario': formulario, 'codigo_centro': centro.centro.codigo[:9], 'nombre_centro': centro.centro.nombre, 'exito':"si"}
+				formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"), plazas_centros[0].get("cargo"))
+				ctx = {'formulario': formulario, 'plaza': plazas_centros[0], 'exito':"si"}
 			else:
-				ctx = {'formulario':formulario, 'codigo_centro': centro.centro.codigo[:9], 'nombre_centro': centro.centro.nombre, 'error':'cx'}		
+				ctx = {'formulario':formulario, 'plaza': plazas_centros[0], 'error':'cx'}		
 		else:
-			formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"))
+			formulario = AcuerdoBasicaForm(plazas_centros[0].get("codigo_departamento"), plazas_centros[0].get("codigo_municipio"), plazas_centros[0].get("codigo_aldea"), plazas_centros[0].get("cargo"))
 			ctx = {'formulario': formulario, 'plaza': plazas_centros[0]}
 		return render_to_response('acuerdo/acuerdo-basica-nuevo.html', ctx, context_instance=RequestContext(request))
 
@@ -205,11 +234,29 @@ def view_acuerdo_basica_nuevo(request, plaza_id):
 def view_recuperar_docente(request):
 	if request.method == 'POST':
 		identidad= request.POST.get('identidad')
-		docente=PpEmpleados.objects.using('siarhd').get(identidad_empleado=identidad)
-		print docente.fecha_nacimiento.strftime('%Y-%m-%d')
-		print docente.clave_escalafon
-		html=""+docente.nombres_empleado+","+docente.apellidos_empleado+","+str(docente.fecha_nacimiento.strftime('%d/%m/%Y'))+","+str(docente.clave_escalafon)+","+ str(docente.codigo_inprema)
+		docente=PpEmpleados.objects.using('siarhd').get(Q(identidad_empleado=identidad) | Q(clave_escalafon=identidad))
+		if docente.sexo_empleado=='M':
+			sexo="MASCULINO"
+		else:
+			sexo="FEMENINO"
+		html=""+docente.identidad_empleado+","+docente.nombres_empleado+","+docente.apellidos_empleado+","+str(docente.fecha_nacimiento.strftime('%Y-%m-%d'))+","+str(docente.clave_escalafon)+","+ str(docente.codigo_inprema)+","+str(sexo)
 		#print docente.nombres_empleado
+		return HttpResponse(html)
+	else:
+		return HttpResponse(0)
+
+@login_required
+def view_recuperar_estructura(request):
+	if request.method == 'POST':
+		depto= request.POST.get('depto')
+		muni= request.POST.get('muni')
+		centro= request.POST.get('centro')
+		nplaza= request.POST.get('nplaza')
+		try:
+			estructura=plazas.objects.get(codigo_departamento=depto, codigo_muncipio=muni, codigo_centro=centro, numero_plaza=nplaza)
+			html=""+str(estructura.institucion)+","+str(estructura.programa)+","+str(estructura.subprograma)+","+str(estructura.fuente)
+		except Exception, e:
+			html=""+","+","+","
 		return HttpResponse(html)
 	else:
 		return HttpResponse(0)
