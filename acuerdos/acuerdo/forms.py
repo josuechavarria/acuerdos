@@ -34,7 +34,7 @@ class AcuerdoBasicaForm(ModelForm):
 	nacuerdo = forms.CharField(label="Acuerdo #",widget=forms.TextInput(attrs={'size': '23', 'required':'required', 'pattern': '[0-9]{4}[\-]{1}[A-Z]{4}[\-]{1}[0-9]{2}[\-]{1}[0-9]{4}', 'title':'El número de acuerdo tiene un formato inválido.'}))
 	fecha = forms.CharField(label="Fecha parámetro",widget=forms.TextInput(attrs={'required':'required', 'class':'form-control date-picker', 'data-date-format':'yyyy-mm-dd'}))
 	vigencia_desde = forms.DateField(label="Vigencia desde el",widget=forms.DateInput(attrs={'required':'required', 'class':'form-control date-picker', 'data-date-format':'yyyy-mm-dd'}))
-	vigencia_hasta = forms.DateField(label="Hasta",widget=forms.DateInput(attrs={'required':'required', 'class':'form-control date-picker', 'data-date-format':'yyyy-mm-dd'}))
+	vigencia_hasta = forms.DateField(label="Hasta", required=False, widget=forms.DateInput(attrs={'class':'form-control date-picker', 'data-date-format':'yyyy-mm-dd'}))
 	nombres_docente = forms.CharField(label="Nombres",widget=forms.TextInput(attrs={'size': '30', 'readonly':'readonly', 'required':'required', 'pattern': '[a-zA-Z]{3,45}', 'title':'El nombre del docente no es permitido.'}))
 	apellidos_docente = forms.CharField(label="Apellidos",widget=forms.TextInput(attrs={'size': '30', 'readonly':'readonly', 'required':'required', 'pattern': '[a-zA-Z]{3,45}', 'title':'El nombre del docente no es permitido.'}))
 	identidad_docente = forms.CharField(label="Identidad",widget=forms.TextInput(attrs={'class':'form-control', 'size': '18', 'required':'required', 'pattern': '[0-9]{13,13}', 'title':'El número de identidad debe ser numérico y de 13 dígitos.'}))

@@ -68,7 +68,7 @@ class acuerdo_basica(models.Model):
 	fecha=models.DateField(default=datetime.now())
 	movimiento=models.ForeignKey(subtipos_acuerdos)
 	vigencia_desde=models.DateField()
-	vigencia_hasta=models.DateField(default=None, null=True)
+	vigencia_hasta=models.DateField(verbose_name="Hasta", null=True, default=None, blank=True)
 	#infomacion del docente
 	clave_escalafon_docente=models.CharField(max_length=15, verbose_name="Clave de escalafon")
 	nombres_docente=models.CharField(max_length=45, verbose_name="Nombres")
