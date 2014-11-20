@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+   ServerName ACUERDOS
+	   DocumentRoot /var/www/acuerdos
+
+   <Directory /var/www/acuerdos>
+       Order deny,allow
+       AllowOverride None
+       Allow from all
+       Options -FollowSymLinks +SymLinksIfOwnerMatch
+
+   </Directory>
+
+   WSGIDaemonProcess ACUERDOS.djangoserver processes=2 threads=25 display-name=%{GROUP}
+   WSGIProcessGroup ACUERDOS.djangoserver
+
+   WSGIScriptAlias /censo /var/www/acuerdos/acuerdos/wsgi.py
+
+</VirtualHost>
+

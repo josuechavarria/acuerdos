@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block header %}
-	Nuevo Acuerdo de Prebásica/Básica
+	Nuevo Acuerdo de Básica
 {% endblock %}
 
 {% block content %}
@@ -15,6 +15,7 @@
 		{{ form.non_field_errors }}
 		{% if mensaje %}<div class="alert alert-danger">{{ mensaje }}</div>{% endif %}
 		{% csrf_token %}
+		
 		<div class="widget-box">
 			<div class="widget-header widget-header-small">
 				<h4 class="blue"><i class="icon-file bigger-90"></i>  Datos del acuerdo</h4>
@@ -534,10 +535,16 @@
 					Guardar
 					</button>
 					&nbsp; &nbsp; &nbsp;
-					<a class="btn" href="{% url 'vista_dd_plazas_listar' %}">
+					<a class="btn" href="{% url 'vista_dd_plazas_listar'%}">
 						<i class="icon-list-alt bigger-110"></i>
 						Listado
 					</a>
+					&nbsp; &nbsp; &nbsp;					
+					<a class="btn btn-info" href="{% url 'Vista_Libro_pdf'%}">
+					<i class="icon-file bigger-110"></i>
+					   Vista Previa
+					</a>
+					
 				</div>
 		</div>
 
@@ -603,11 +610,11 @@
 				}
 				if ($( "#numero_plaza_id" ).val().length==6 && $( "#centro_id" ).val().length==5){
 					$("#numero_plaza_id").focus()
-					traer_estructra();
+					/*traer_estructra();*/
 				}
 			});
-
-			// funcion TRAER ESTRUCTURA
+          
+            //funcion TRAER ESTRUCTURA
 			function traer_estructra(){
 				var plaza=$("#depto_id").val()+$("#muni_id").val()+$("#centro_id").val()+$("#numero_plaza_id").val();
 					//alert(plaza)
@@ -632,7 +639,7 @@
 							time: '',
 							class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
 							});
-		            	}		            	
+		            	}	            	
 					});
 					request.fail(function( jqXHR, textStatus ) {
 						$.gritter.add({
@@ -644,10 +651,10 @@
 						});
 					});
 			}
-			// TRAE LA ESTRUCTURA PRESUPUESTARIA
+			// TRAE LA ESTRUCTURA PRESUPUESTARIA*/
 			$( "#numero_plaza_id" ).on( "keyup", function() {
 				if ($( "#numero_plaza_id" ).val().length==6 && $( "#centro_id" ).val().length==5){
-					traer_estructra();
+					/*traer_estructra();*/
 				}
 			});
 
@@ -665,7 +672,7 @@
 
 			$("#busca_identidad").on("click", function(){
 				var expresion = /^[0-9]{13,13}$/;
-				var id = $("#id_identidad_docente").val();
+				var id = $("#id_identidad_docente").val();								
 				if (id.match(expresion)){
 					var identidad_docente=$("#id_identidad_docente").val();
 
@@ -690,7 +697,7 @@
 					request.fail(function( jqXHR, textStatus ) {
 						$.gritter.add({
 						title: '¡Falló!',
-						text: 'El número de identidad no se ha encontrado.',
+						text: 'El número de identidad no se ha encontrado.',												
 						sticky: false,
 						time: '',
 						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')

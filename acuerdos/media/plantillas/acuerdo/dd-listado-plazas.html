@@ -41,7 +41,8 @@
 															{{ p.codigo_centro }} - {{ p.nombre_centro }}
 														</td>
 														<td class="center">
-															{{ p.nivel_educativo }}
+															{{ p.nivel_educativo}}
+
 														</td>
 
 														<td>{{ p.cargo }}</td>
@@ -57,12 +58,23 @@
 																</a>
 															{% endif %}
 															{% if perms.acuerdo.add_plazas_disponibles %}
-																<a data-placement="left" data-rel="tooltip" data-original-title="Crea un acuerdo para esta plaza." class="blue tooltip-info" href="{% url 'vista_acuerdo_basica_nuevo' p.pk %}">
+																{% if p.nivel_educativo.nivel_educativo_id = 1 %}
+																	<a data-placement="left" data-rel="tooltip" data-original-title="Crea un acuerdo para esta plaza." class="blue tooltip-info" href="{% url 'vista_acuerdo_prebasica_nuevo' p.pk %}">
 																	<i class="icon-plus-sign purple bigger-130"></i> Crear Acuerdo
 																</a>
+
+																{% elif p.nivel_educativo.nivel_educativo_id = 2 %}	
+																	<a data-placement="left" data-rel="tooltip" data-original-title="Crea un acuerdo para esta plaza." class="blue tooltip-info" href="{% url 'vista_acuerdo_basica_nuevo' p.pk %}">
+																	<i class="icon-plus-sign purple bigger-130"></i> Crear Acuerdo
+																</a>
+
+																{% elif p.nivel_educativo.nivel_educativo_id = 3 %}	
+																	<a data-placement="left" data-rel="tooltip" data-original-title="Crea un acuerdo para esta plaza." class="blue tooltip-info" href="{% url 'vista_acuerdo_media_nuevo' p.pk %}">
+																	<i class="icon-plus-sign purple bigger-130"></i> Crear Acuerdo
+																</a>
+																{% endif %}
 															{% endif %}
-															
-											
+
 															</div>
 														</td>
 													

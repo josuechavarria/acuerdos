@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Administración - Módulo de acuerdos</title>
+
+		<meta name="description" content="Inicio Plazas" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- basic styles -->
+
+		<link href="/media/estaticos/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/media/estaticos/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<link rel="stylesheet" href="/media/estaticos/css/jquery-ui-1.10.3.custom.min.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/chosen.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/datepicker.css" />
+
+		<!-- fonts -->
+
+		<link rel="stylesheet" href="/media/estaticos/css/ace-fonts.css" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="/media/estaticos/css/ace.min.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="/media/estaticos/css/ace-skins.min.css" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script src="/media/estaticos/js/ace-extra.min.js"></script>
+
+
+	</head>
+
+	<body>
+		<div class="navbar skin-1 top-menu" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<a href="#" class="navbar-brand">
+						<small>
+							<i class="icon-cogs"></i>
+							Administración
+						</small>
+					</a><!-- /.brand -->
+				</div><!-- /.navbar-header -->
+
+				<div class="navbar-header pull-right" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="/media/estaticos/avatars/avatar.png" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>Hola,</small>
+									{{user.first_name}}
+								</span>
+
+								<i class="icon-caret-down"></i>
+							</a>
+
+							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+								<li>
+									<a href="#">
+										<i class="icon-cog"></i>
+										Configuración
+									</a>
+								</li>
+
+								<li>
+									<a href="#">
+										<i class="icon-user"></i>
+										Perfil
+									</a>
+								</li>
+
+								<li class="divider"></li>
+
+								<li>
+									<a href="{% url 'vista_logout' %}">
+										<i class="icon-off"></i>
+										Cerra Sesión
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul><!-- /.ace-nav -->
+				</div><!-- /.navbar-header -->
+			</div><!-- /.container -->
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+							<button class="btn btn-success">
+								<i class="icon-signal"></i>
+							</button>
+
+							<button class="btn btn-info">
+								<i class="icon-pencil"></i>
+							</button>
+
+							<button class="btn btn-warning">
+								<i class="icon-group"></i>
+							</button>
+
+							<button class="btn btn-danger">
+								<i class="icon-cogs"></i>
+							</button>
+						</div>
+
+						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+							<span class="btn btn-success"></span>
+
+							<span class="btn btn-info"></span>
+
+							<span class="btn btn-warning"></span>
+
+							<span class="btn btn-danger"></span>
+						</div>
+					</div><!-- #sidebar-shortcuts -->
+<!-- Plazas ||| consultar, reportar vacante  -->
+					<ul class="nav nav-list">
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-edit"></i>
+								<span class="menu-text"> Plazas </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="{% url 'vista_dd_plazas_listar' %}">
+										<i class="icon-double-angle-right"></i>
+										Listar disponibles
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-edit"></i>
+								<span class="menu-text"> Acuerdos </span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+							<ul class="submenu">
+								<li>
+									<a href="#" class="dropdown-toggle">
+										<i class="icon-double-angle-right"></i>
+										Crear
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="{% url 'vista_logout' %}">
+								<i class="icon-off"></i>
+								<span class="menu-text"> Cerrar Sesión </span>
+							</a>
+						</li>
+
+					</ul><!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li class="active">
+								<i class="icon-home home-icon"></i>
+								<a href="{% url 'vista_acuerdos_inicio' %}">Inicio</a>
+							</li>
+							{% block ubicacion %}
+							{% endblock %}
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Buscar ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div class="container">
+										<div class="page-header">
+											<h1>
+												{% block header %}
+												{% endblock %}
+											</h1>
+										</div><!-- /.page-header -->
+									<div>
+									<div class="space" id="gritter-center"></div>
+									{% block content %}
+										<h1 class="grey lighter smaller">
+											<span class="blue bigger-125">
+												<i class="icon-user"></i>
+												
+											</span>
+											Dirección departamental de {{ departamento }} - Bienvenido
+										</h1>
+
+										<hr />
+										<h3 class="lighter smaller">En esta página usted podrá realizar el seguimiento de los acuerdos administrados en su departamento.</h3>
+
+										<div>
+											
+											<!--<h4 class="smaller">Intente comenzar con alguna de estas tareas:</h4>-->
+
+											<ul class="list-unstyled spaced inline bigger-110 margin-15">
+												<li class="alert alert-info">
+													<i class="icon-list green bigger-130"></i>
+													<a href="">Listar los acuerdos que se han creado en el departamento</a>
+													<!--aqui va el nombre de la vista para listar los acuerdos -->
+												</li>
+												<!--<li class="alert alert-success">
+													<i class="icon-plus green bigger-130"></i>
+													<a href="{% url 'vista_plazas_nuevo' %}">Ingresar un acuerdo para una plaza disponible</a>-->
+												</li>
+												<li class="alert alert-warning">
+													<i class="icon-off green bigger-130"></i>
+													<a>Terminar la sesión</a>
+												</li>
+											</ul>
+										</div>
+
+										<hr />
+										<div class="space"></div>
+
+										<div class="center">
+											<a href="{% url 'vista_inicio' %}" class="btn btn-info">
+												<i class="icon-arrow-left"></i>
+												Regresar
+											</a>
+
+											<a href="{% url 'vista_logout' %}" class="btn btn-inverse">
+												<i class="icon-off"></i>
+												Cerrar Sesion
+											</a>
+										</div>
+										{% endblock %}
+									</div>
+
+								</div><!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+				<div class="ace-settings-container" id="ace-settings-container">
+					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+						<i class="icon-cog bigger-150"></i>
+					</div>
+
+					<div class="ace-settings-box" id="ace-settings-box">
+						<div>
+							<div class="pull-left">
+								<select id="skin-colorpicker" class="hide">
+									<option data-skin="default" value="#438EB9">#438EB9</option>
+									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+								</select>
+							</div>
+							<span>&nbsp; Choose Skin</span>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+							<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+							<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+							<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+							<label class="lbl" for="ace-settings-add-container">
+								Inside
+								<b>.container</b>
+							</label>
+						</div>
+					</div>
+				</div><!-- /#ace-settings-container -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		
+		<script src="/media/estaticos/js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/media/estaticos/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="/media/estaticos/js/bootstrap.min.js"></script>
+		
+		<script src="/media/estaticos/js/typeahead-bs2.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="assets/js/excanvas.min.js"></script>
+		<![endif]-->
+		<script src="/media/estaticos/js/jquery.dataTables.min.js"></script>
+<script src="/media/estaticos/js/jquery.dataTables.bootstrap.js"></script>
+
+		<script src="/media/estaticos/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="/media/estaticos/js/jquery.gritter.min.js"></script>
+
+		<!-- ace scripts -->
+		<script src="/media/estaticos/js/ace.min.js"></script>
+		<script src="/media/estaticos/js/ace-elements.min.js"></script>
+		<script src="/media/estaticos/js/chosen.jquery.min.js"></script>
+		<script src="/media/estaticos/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="/media/estaticos/js/bootbox.min.js"></script>
+		<script src="/media/estaticos/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="/media/estaticos/js/jquery.maskedinput.min.js"></script>
+
+
+		<!-- inline scripts related to this page -->
+		{% block extrajs %}
+		<script type="text/javascript">
+			 jQuery(function($) {
+				$('document').ready(function(){
+						$.gritter.add({
+							title: '¡Bienvenido {{ user.first_name }}!',
+							text: 'Intenta comenzar con alguna de las tareas que se te presentan. Recuerda terminar tu sesión cuando finalices.',
+							sticky: false,
+							time: '',
+							class_name: 'gritter-info' + (!$('#gritter-center').get(0).checked ? ' gritter-info' : '')
+						});
+
+					});
+				
+			 });
+		</script>
+		{% endblock %}
+	</body>
+</html>
+
+
+		

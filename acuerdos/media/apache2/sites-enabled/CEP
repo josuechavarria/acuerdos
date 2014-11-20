@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+   ServerName CEP
+   DocumentRoot /var/www/cep
+
+   <Directory /var/www/cep>
+       Order deny,allow
+       AllowOverride None
+       Allow from all
+       Options -FollowSymLinks +SymLinksIfOwnerMatch
+
+   </Directory>
+
+   WSGIDaemonProcess CEP.djangoserver processes=2 threads=25 display-name=%{GROUP}
+   WSGIProcessGroup CEP.djangoserver
+
+   WSGIScriptAlias /cep /var/www/cep/cep/wsgi.py
+
+   #Alias /media/ /var/www/SISCD/SISCD/media/
+</VirtualHost>

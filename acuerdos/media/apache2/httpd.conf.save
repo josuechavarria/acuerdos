@@ -1,0 +1,7 @@
+SGIScriptAlias /sare /var/www/UNAG/UNAG/apache/django.wsgi
+Alias /media /var/www/UNAG/UNAG/media/
+
+WSGIScriptAlias /cep /var/www/cep/cep/apache/django.wsgi
+Alias /medios /var/www/cep/cep/medios/
+
+Alias /static/admin /usr/local/lib/python2.7/dist-packages/django/contrib/admin/static/admin

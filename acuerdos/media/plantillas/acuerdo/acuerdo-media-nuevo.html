@@ -1,0 +1,751 @@
+{% extends "base_acuerdos.html" %}
+
+{% block ubicacion %}
+	<li class="active">
+		<a href="#">Nuevo acuerdo</a>
+	</li>
+{% endblock %}
+
+{% block header %}
+	Nuevo Acuerdo de Media
+{% endblock %}
+
+{% block content %}
+	<form method="POST" id="frm_acuerdo" class="form-horizontal" role="form" {% if formulario.is_multipart %}enctype="multipart/form-data"{% endif %}>
+		{{ form.non_field_errors }}
+		{% if mensaje %}<div class="alert alert-danger">{{ mensaje }}</div>{% endif %}
+		{% csrf_token %}
+		
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="blue"><i class="icon-file bigger-90"></i>  Datos del acuerdo</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-up"></i>
+					</a>
+				</span>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+		<div class="row">
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.movimiento.label_tag }}
+					</div>
+					<div class="col-sm-10 pull-left">
+							{{ formulario.movimiento }}
+							{{ formulario.movimiento.errors }}
+					</div>
+				</p>
+			 	
+			</div>
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.fecha.label_tag }}
+					</div>
+
+					<div class="col-sm-3">
+						<div class="input-group">
+							{{ formulario.fecha }}
+							<span class="input-group-addon">
+								<i class="icon-calendar bigger-110"></i>
+							</span>
+							<p>{{ formulario.fecha.errors }}<p>
+						</div>
+					</div>
+			 	</p>
+			</div>
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						 {{ formulario.accion.label_tag }}
+					</div>
+					<div class="col-sm-10 pull-left">
+						{{ formulario.accion }}
+						{{ formulario.accion.errors }}
+					</div>
+				</p>
+				
+			</div>			
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.nacuerdo.label_tag }}
+					</div>
+
+					<div class="col-sm-9">
+						{{ formulario.nacuerdo }}
+					</div>
+			 	</p>
+			</div>			
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.vigencia_desde.label_tag }}
+					</div>
+
+					<div class="col-sm-3">
+						<div class="input-group">
+							{{ formulario.vigencia_desde }}
+							<span class="input-group-addon">
+								<i class="icon-calendar bigger-110"></i>
+							</span>
+							{{ formulario.vigencia_desde.errors }}
+						</div>
+					</div>
+			 	</p>
+			</div>
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						{{ formulario.vigencia_hasta.label_tag }}
+					</div>
+
+					<div class="col-sm-3">
+						<div class="input-group">
+							{{ formulario.vigencia_hasta }}
+							<span class="input-group-addon">
+								<i class="icon-calendar bigger-110"></i>
+							</span>
+							{{ formulario.vigencia_hasta.errors }}
+						</div>
+					</div>
+			 	</p>
+			</div>		
+			<div class="col-xs-12">
+				<p>
+					<div class="col-sm-2">
+						 {{ formulario.estado.label_tag }}
+					</div>
+
+					<div class="col-sm-3">
+							{{ formulario.estado }}
+							{{ formulario.estado.errors }}
+					</div>
+			 	</p>
+			</div>
+		</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="blue"><i class="icon-user bigger-90"></i>   Datos del docente</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-down"></i>
+					</a>
+				</span>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row">
+						<div class="col-xs-5">
+							<div class="form-group">
+								<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.identidad_docente.label_tag }}
+								</label>
+
+								<div class="col-sm-7">
+									<div class="input-group">
+										{{ formulario.identidad_docente }}
+										<span class="input-group-btn">
+											<button type="button" id="busca_identidad" class="btn btn-primary btn-sm">Buscar <i class="icon-search bigger-110"></i></button>
+										</span>
+										{{ formulario.identidad_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-5">
+							<div class="form-group">
+								<label class="col-sm-5 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.clave_escalafon_docente.label_tag }}
+								</label>
+
+								<div class="col-sm-7">
+									<div class="input-group">
+										{{ formulario.clave_escalafon_docente }}
+										<span class="input-group-btn">
+											<button type="button" id="busca_clave" class="btn btn-primary btn-sm">Buscar <i class="icon-search bigger-110"></i></button>
+										</span>
+										{{ formulario.clave_escalafon_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>		
+						<div class="col-xs-2">
+						</div>
+					</div>
+
+					</br>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.nombres_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.nombres_docente }}
+										{{ formulario.nombres_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.apellidos_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.apellidos_docente }}
+										{{ formulario.apellidos_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>	
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.fecha_nacimiento_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.fecha_nacimiento_docente }}
+										{{ formulario.fecha_nacimiento_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.sexo_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.sexo_docente }}
+										{{ formulario.sexo_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.numero_imprema.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.numero_imprema }}
+										{{ formulario.numero_imprema.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.colegio1.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.colegio1 }}
+										{{ formulario.colegio1.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.colegio2.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.colegio2 }}
+										{{ formulario.colegio2.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>		
+							
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-2">
+									{{ formulario.estado_docente.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.estado_docente }}
+										{{ formulario.estado_docente.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>	
+						<div class="col-xs-4">
+						</div>		
+						<div class="col-xs-4">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="blue"><i class="icon-flag bigger-90"></i> Datos del centro Educativo</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-down"></i>
+					</a>
+				</span>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row">
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.cargo.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.cargo }}
+										{{ formulario.cargo.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>	
+
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.codigo_centro.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.codigo_centro }}
+										{{ formulario.codigo_centro.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>	
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.nombre_centro.label_tag }}
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										{{ formulario.nombre_centro }}
+										{{ formulario.nombre_centro.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									<label>Nivel Educativo:</label>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<input type="text" size="55" readonly="readonly" value="{{plaza.nivel_educativo}}" />
+									</div>
+								</div>
+						 	</p>
+						</div>
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									<label>Frontera:</label>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<label><b>{{plaza.frontera}}</b></label>
+									</div>
+								</div>
+						 	</p>
+						</div>
+						<div class="col-xs-4">
+							<p></p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="col-sm-4 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.departamento.label_tag }}
+								</label>
+
+								<div class="col-sm-8">
+									<div class="input-group">
+										{{ formulario.departamento }}
+										{{ formulario.departamento.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.municipio.label_tag }}
+								</label>
+
+								<div class="col-sm-9">
+									<div class="input-group">
+										{{ formulario.municipio }}
+										{{ formulario.municipio.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>		
+						<div class="col-xs-4">
+							<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="id_codigo_centro"> {{ formulario.aldea.label_tag }}
+								</label>
+
+								<div class="col-sm-9">
+									<div class="input-group">
+										{{ formulario.aldea }}
+										{{ formulario.aldea.errors }}
+									</div>
+								</div>
+						 	</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="widget-box">
+			<div class="widget-header widget-header-small">
+				<h4 class="blue"><i class="icon-briefcase bigger-90"></i> Estructura de la plaza</h4>
+				<span class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-down"></i>
+					</a>
+				</span>
+			</div>
+
+			<div class="widget-body">
+				<div class="widget-main">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-7">
+								<label>ESTRUCTURA DE LA PLAZA SIARHD</label>
+									<div class="input-group">
+										
+										<span class="input-group-addon">
+											<a href="#">DEPTO</a>
+										</span>
+										<input type="text" required='required' readonly="readonly" pattern= '[0-9]{2,2}' title='Sólo se permiten 2 números.' id="depto_id" name="depto" size="3"/>
+
+										<span class="input-group-addon">
+											<a href="#">MUNI</a>
+										</span>
+										<input type="text" required='required' readonly="readonly" pattern= '[0-9]{2,2}' title='Sólo se permiten 2 números.' id="muni_id" name="muni" size="3"/>
+
+										<span class="input-group-addon">
+											<a href="#">CENTRO</a>
+										</span>
+										<input type="text" required='required'  pattern= '[0-9]{5,5}' title='Sólo se permiten 5 números.' id="centro_id" name="centro" size="6"/>
+										<span class="input-group-addon">
+											<a href="#">NPLAZA</a>
+										</span>
+										<input type="text" required='required' pattern= '[0-9]{6,6}' title='Sólo se permiten 6 números.' id="numero_plaza_id" name="numero_plaza" size="7"/>
+									</div>
+								</div>
+						 	</div>
+						</div>		
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<div class="col-sm-7">
+								<label>ESTRUCTURA PRESUPUESTARIA</label>
+									<div class="input-group">
+										
+										<span class="input-group-addon">
+											<a href="#">INST</a>
+										</span>
+										<input type="text" required='required' pattern= '[0-9]{2,2}' title='Sólo se permiten 2 números.' id="inst_id" name="inst" size="3"/>
+
+										<span class="input-group-addon">
+											<a href="#">PRG</a>
+										</span>
+										<input type="text" required='required' pattern= '[0-9]{2,2}' title='Sólo se permiten 2 números.' id="prg_id" name="prg" size="3"/>
+
+										<span class="input-group-addon">
+											<a href="#">SPRO</a>
+										</span>
+										<input type="text" required='required' pattern= '[0-9]{2,2}' title='Sólo se permiten 2 números.' id="spro_id" name="spro" size="3"/>
+										<span class="input-group-addon">
+											<a href="#">FND</a>
+										</span>
+										<input type="text" required='required' pattern= '[0-9]{2,2}' title='Sólo se permiten 2 números.' id="fnd_id" name="fnd" size="3"/>
+									</div>
+								</div>
+						 	</div>
+						</div>	
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.jornada_laboral.label_tag }}
+								</div>
+								<div class="col-sm-2">
+									<div class="input-group">
+										{{ formulario.jornada_laboral }}
+										{{ formulario.jornada_laboral.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>	
+						<div class="col-xs-12">
+							<p>
+								<div class="col-sm-2">
+									{{ formulario.justificacion.label_tag }}
+								</div>
+								<div class="col-sm-2">
+									<div class="input-group">
+										{{ formulario.justificacion }}
+										{{ formulario.justificacion.errors }}
+									</div>
+								</div>
+						 	</p>
+						</div>	
+					</div>
+			</div>
+		</div>
+		<div class="clearfix form-actions">
+				<div class="col-md-offset-3 col-md-9">
+					<button class="btn btn-info" type="submit">
+					<i class="icon-ok bigger-110"></i>
+					Guardar
+					</button>
+					&nbsp; &nbsp; &nbsp;
+					<a class="btn" href="{% url 'vista_dd_plazas_listar'%}">
+						<i class="icon-list-alt bigger-110"></i>
+						Listado
+					</a>
+					&nbsp; &nbsp; &nbsp;					
+					<a class="btn btn-info" href="{% url 'Vista_Libro_pdf'%}">
+					<i class="icon-file bigger-110"></i>
+					   Vista Previa
+					</a>
+					
+				</div>
+		</div>
+
+		<div class="space-4"></div>
+	</form>
+{% endblock %}
+
+{% block extrajs %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#id_codigo_centro").val("{{codigo_centro}}")
+			$("#depto_id").val("{{plaza.codigo_departamento}}")
+			$("#muni_id").val("{{plaza.codigo_municipio}}")
+			$( "#id_codigo_centro" ).attr('readonly','readonly');
+			{% if exito %}
+				$.gritter.add({
+						title: '¡Éxito!',
+						text: 'Su información ha sido almacenada exitosamente.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-success gritter-center' + (!$('#gritter-center').get(0).checked ? ' gritter-success gritter-center' : '')
+				});
+			{% endif %}
+			{% if error %}
+				$.gritter.add({
+						title: '¡Falló!',
+						text: 'Ocurrió un error al guardar los datos, por favor revise la información digitada.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+				});
+			{% endif %}
+			$(".chosen-select").chosen();
+			$('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+			$('[data-rel=tooltip]').tooltip();
+			$.mask.definitions['~']='[+-]';
+					$('.input-mask-2numeros').mask('99');
+					$('.input-mask-5numeros').mask('99999');
+					$('.input-mask-6numeros').mask('999999');
+					$('.input-mask-date').mask('9999/99/99');
+					$('.input-mask-phone').mask('(999) 999-9999');
+
+			$( "#id_accion" ).on( "keyup", function() {
+				var anio=new Date($("#id_fecha").val())
+				$("#id_nacuerdo").val($("#id_accion").val()+"-"+"DDE"+"{{ plaza.departamento }}".substring(0,1)+"-"+"{{plaza.codigo_departamento}}"+"-"+anio.getFullYear())
+			});
+
+			$( "#depto_id" ).on( "keyup", function() {
+				if ($( "#depto_id" ).val().length==2){
+					$("#muni_id").focus()
+				}
+			});
+			$( "#muni_id" ).on( "keyup", function() {
+				if ($( "#muni_id" ).val().length==2){
+					$("#centro_id").focus()
+				}
+			});
+			$( "#centro_id" ).on( "keyup", function() {
+				if ($( "#centro_id" ).val().length==5){
+					$("#numero_plaza_id").focus()
+				}
+				if ($( "#numero_plaza_id" ).val().length==6 && $( "#centro_id" ).val().length==5){
+					$("#numero_plaza_id").focus()
+					/*traer_estructra();*/
+				}
+			});
+
+			// funcion TRAER ESTRUCTURA
+			function traer_estructra(){
+				var plaza=$("#depto_id").val()+$("#muni_id").val()+$("#centro_id").val()+$("#numero_plaza_id").val();
+					//alert(plaza)
+					var sendInfo = $('#frm_acuerdo').serialize()+"&depto="+$("#depto_id").val()+"&muni="+$("#muni_id").val()+"&centro="+$("#centro_id").val()+"&nplaza="+$("#numero_plaza_id").val();	
+					var request=$.ajax({
+						url: "{% url 'vista_recuperar_estructura' %}",
+						type: "POST",
+						data: sendInfo,
+						dataType: "html"
+					});
+					request.done(function( data ) {
+						datos=data.split(",")
+						$("#inst_id").val(datos[0])
+		            	$("#prg_id").val(datos[1])
+		            	$("#spro_id").val(datos[2])
+		            	$("#fnd_id").val(datos[3])
+		            	if (datos[0]==''){
+		            		$.gritter.add({
+							title: '¡Falló!',
+							text: 'La estructura de la plaza no se ha encontrado.',
+							sticky: false,
+							time: '',
+							class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+							});
+		            	}		            	
+					});
+					request.fail(function( jqXHR, textStatus ) {
+						$.gritter.add({
+						title: '¡Falló!',
+						text: 'La estructura de la plaza no se ha encontrado.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+						});
+					});
+			}
+			// TRAE LA ESTRUCTURA PRESUPUESTARIA
+			$( "#numero_plaza_id" ).on( "keyup", function() {
+				if ($( "#numero_plaza_id" ).val().length==6 && $( "#centro_id" ).val().length==5){
+					/*traer_estructra();*/
+				}
+			});
+
+			$("#id_codigo_centro").val("{{ plaza.codigo_centro }}")
+			$("#id_nombre_centro").val("{{ plaza.nombre_centro }}")
+
+			//seleccionar por defecto la aldea, municipio, departamento
+			$("#id_estado option[value=1"+"]").attr("selected",true);
+			$("#id_jornada_laboral").attr("required","required");
+			$("#id_justificacion").attr("required","required");
+			$("#id_departamento option[value="+ {{ plaza.departamento_id }} +"]").attr("selected",true);
+			$("#id_municipio option[value="+ {{ plaza.municipio_id }} +"]").attr("selected",true);
+			$("#id_aldea option[value="+ {{ plaza.aldea_id }} +"]").attr("selected",true);
+			$("#id_cargo option[value="+ {{ plaza.cargo }} +"]").attr("selected",true);
+
+			$("#busca_identidad").on("click", function(){
+				var expresion = /^[0-9]{13,13}$/;
+				var id = $("#id_identidad_docente").val();
+				if (id.match(expresion)){
+					var identidad_docente=$("#id_identidad_docente").val();
+
+					var sendInfo = $('#frm_acuerdo').serialize()+"&identidad="+identidad_docente;	
+					var request=$.ajax({
+						url: "{% url 'vista_recuperar_docente' %}",
+						type: "POST",
+						data: sendInfo,
+						dataType: "html"
+					});
+					request.done(function( data ) {
+						datos=data.split(",")
+		            	$("#id_identidad_docente").val(datos[0])
+		            	$("#id_nombres_docente").val(datos[1])
+		            	$("#id_apellidos_docente").val(datos[2])
+		            	$("#id_fecha_nacimiento_docente").val(datos[3])
+		            	$("#id_clave_escalafon_docente").val(datos[4])
+		            	$("#id_numero_imprema").val(datos[5])
+		            	$("#id_sexo_docente").val(datos[6])
+		            	
+					});
+					request.fail(function( jqXHR, textStatus ) {
+						$.gritter.add({
+						title: '¡Falló!',
+						text: 'El número de identidad no se ha encontrado.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+					});
+					});
+				}else{
+					$.gritter.add({
+						title: '¡Falló!',
+						text: 'El parámetro de búsqueda es incorrecto por favor revise la identidad ingresada.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+					});
+				}
+	        })
+
+			$("#busca_clave").on("click", function(){
+
+					var identidad_docente=$("#id_clave_escalafon_docente").val();
+
+					var sendInfo = $('#frm_acuerdo').serialize()+"&identidad="+identidad_docente;	
+					var request=$.ajax({
+						url: "{% url 'vista_recuperar_docente' %}",
+						type: "POST",
+						data: sendInfo,
+						dataType: "html"
+					});
+					request.done(function( data ) {
+						datos=data.split(",")
+						$("#id_identidad_docente").val(datos[0])
+		            	$("#id_nombres_docente").val(datos[1])
+		            	$("#id_apellidos_docente").val(datos[2])
+		            	$("#id_fecha_nacimiento_docente").val(datos[3])
+		            	$("#id_clave_escalafon_docente").val(datos[4])
+		            	$("#id_numero_imprema").val(datos[5])
+		            	$("#id_sexo_docente").val(datos[6])
+		            	
+					});
+					request.fail(function( jqXHR, textStatus ) {
+						$.gritter.add({
+						title: '¡Falló!',
+						text: 'La clave de escalafon no se ha encontrado.',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-error gritter-right' + (!$('#gritter-center').get(0).checked ? ' gritter-error gritter-right' : '')
+					});
+					});
+	        })
+		});
+	</script>
+{% endblock %}
