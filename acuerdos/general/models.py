@@ -2,6 +2,7 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User, UserManager, AbstractBaseUser
+from acuerdos.general.models import *
 
 # Create your models here.
 
@@ -209,3 +210,13 @@ class User(User):
 
 	class Meta:
 		verbose_name_plural = "Usuarios"
+
+
+class tipos_movimientos(models.Model):
+	descripcion=models.CharField(max_length=255, verbose_name="descripción")
+
+	def __unicode__(self):
+		return self.descripcion
+
+	class Meta:
+		verbose_name_plural = "tipos de movimientos"

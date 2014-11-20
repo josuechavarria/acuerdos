@@ -139,7 +139,7 @@
 						{% endif %}
 						{% if perms.acuerdo.can_view_reportes %}
 						<li>
-							<a href="widgets.html">
+							<a href="{% url 'vista_acuerdos_listar' %}">
 								<i class="icon-list-alt"></i>
 								<span class="menu-text"> Reportes </span>
 							</a>
@@ -258,7 +258,7 @@
 										</div>
 							</div>
 						{% endif %}
-						{% if perms.acuerdo.can_view_plazas_disponibles %}
+						{% if perms.acuerdo.can_view_plazas_disponibles and Departamento = 1%}
 							<div class="col-xs-12 col-sm-3 widget-container-span">
 										<div class="widget-box light-border">
 											<div class="widget-header header-color-blue">
@@ -297,7 +297,7 @@
 												
 												<h5 class="smaller">
 												<i class="icon-tasks"></i>
-												<a href="#" class="white" title="Click para ir al menú de acuerdos." >
+												<a href="{% url 'vista_acuerdos_listar' %}" class="white" title="Click para ir al menú de acuerdos." >
 													Reportes
 												</a>
 												</h5>
@@ -312,7 +312,7 @@
 											<div class="widget-body">
 												<div class="widget-main padding-6">
 													<div class="alert alert-warning"> Permite consultar la información referente a las acciones sobre un acuerdo. 
-														<a href="#" class="btn btn-info btn-xs pull-right">
+														<a href="{% url 'vista_acuerdos_listar' %}" class="btn btn-info btn-xs pull-right">
 															<i class="icon-arrow-right bigger-20"></i>
 															Ir
 														</a>

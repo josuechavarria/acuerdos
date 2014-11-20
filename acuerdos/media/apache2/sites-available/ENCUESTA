@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+   ServerName ENCUESTA
+   DocumentRoot /var/www/encuestaprueba
+
+   <Directory /var/www/encuestaprueba>
+       Order deny,allow
+       AllowOverride None
+       Allow from all
+       Options -FollowSymLinks +SymLinksIfOwnerMatch
+
+   </Directory>
+
+   WSGIDaemonProcess ENCUESTA.djangoserver processes=2 threads=25 display-name=%{GROUP}
+   WSGIProcessGroup ENCUESTA.djangoserver
+
+   WSGIScriptAlias /censo /var/www/encuestaprueba/encuestaprueba/wsgi.py
+
+</VirtualHost>
+

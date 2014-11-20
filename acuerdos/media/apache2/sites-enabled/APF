@@ -1,0 +1,37 @@
+<virtualhost *:80>
+WSGIDaemonProcess apf.djangoproject processes=1 threads=5
+WSGIDaemonProcess demo.djangoproject processes=1 threads=5
+
+<Directory /var/www/apf>
+        Order allow,deny
+        Allow from all
+</Directory>
+
+<Directory /var/www/apf/apf/media>
+        Order deny,allow
+        Allow from all
+</Directory>
+
+Alias /static/admin /usr/local/lib/python2.7/dist-packages/django/contrib/admin/static/admin
+<Directory /usr/local/lib/python2.7/dist-packages/django/contrib/admin/static/admin>
+        Order deny,allow
+        Allow from all
+</Directory>
+
+WSGIScriptAlias /apf /var/www/apf/apf/apache/django.wsgi
+Alias /media /var/www/apf/apf/media/
+
+<Location /apf>
+WSGIProcessGroup apf.djangoproject
+WSGIApplicationGroup %{GLOBAL}
+</Location>
+
+WSGIScriptAlias /demo /var/www/demo/demo/apache/django.wsgi
+
+<Location /demo>
+WSGIProcessGroup demo.djangoproject
+WSGIApplicationGroup %{GLOBAL}
+</Location>
+</virtualhost>
+
+

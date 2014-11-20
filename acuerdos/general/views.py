@@ -14,10 +14,14 @@ from acuerdos.acuerdo.models_sace import *
 
 @login_required
 def view_index(request):
-	return render_to_response('general/menu-principal.html', context_instance=RequestContext(request))
 
+	Departamento = request.user.groups.get().id
+	ctx = {'Departamento' : Departamento}
+	print ctx;
+	return render_to_response('general/menu-principal.html',ctx,context_instance=RequestContext(request))
+    
 def view_login_1(request):
-	mensaje=""
+ 	mensaje=""
 	if request.user.is_authenticated():
 		return HttpResponseRedirect(reverse('vista_inicio')) #redirecciona a la raiz
 	else:
@@ -66,10 +70,18 @@ def view_login(request):
 						if AuthUserGroups.objects.using("sace").filter(user=director.pk, group__pk=1):
 							print "ES DIRECTOR"
 							if len(User.objects.filter(username = director.username)) == 0:
-								user = User.objects.create_user(username = director.username, password = director.password, email=director.email, first_name = director.first_name, last_name = director.last_name)						
+								user = User.objects.create_user(username = director.username, password = director.password, email=director.email, first_name = director.first_name, last_name = director.last_name, departamento = departamento.objects.get(pk=01), telefono = 99999999)						
 								user.groups.add(Group.objects.get(name = 'director'))#grupo ESTUDIANTE
-								user.password=director.password
-								user.save()											
+								user.password=director.password 
+								#user.departamento = departamento.objects.get(pk=19)
+								#user.telefono = 99999999
+								user.save()	
+								us=authenticate(username=u, password=p)
+								if us is not None and us.is_active==True: #si el usuario no es nullo y esta activo
+									login(request, us) #crea la sesion
+									return HttpResponseRedirect(reverse('vista_inicio')) #redirecciona a la raiz
+								else:
+									mensaje = "La combinación Usuario y Contraseña es incorrecta"										
 							else:
 								#user = User.objects.get(username = director.username)
 								print u
@@ -187,3 +199,19 @@ def view_usuarios_deshabilitar(request):
 			ctx = {'formulario': formulario}
 		return render_to_response('general/usuario-deshabilitar.html', ctx, context_instance=RequestContext(request))
 
+#def libro_pdf(request):    
+ #   print "Adentro"            
+   # if: acuerdo= None
+
+  #  general= tipos_acuerdos.objects.get(id = 1)     
+   
+    #movimiento= tipos_movimientos.objects.get(id=1)
+
+    #print acuerdo.municipio.descripcion
+    #print tacuerdo.tipos_acuerdos.descripcion  
+
+
+   # departamento = SecretariaDepartamento.objects.get(id = acuerdo.departamento_id)
+    #centro=SecretariaCentroeducativo.objects.using("sace").get(codigo__startswith=p.codigo_centro)        
+   # html = render_to_string('acuerdo/acuerdo_pdf.html', {'pagesize':'A4','general':general}, context_instance=RequestContext(request))
+    # return generar_pdf(html)

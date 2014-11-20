@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+   ServerName UNAG
+   DocumentRoot /var/www/UNAG
+
+   <Directory /var/www/UNAG>
+       Order deny,allow
+       AllowOverride None
+       Allow from all
+       Options -FollowSymLinks +SymLinksIfOwnerMatch
+
+   </Directory>
+
+   WSGIDaemonProcess UNAG.djangoserver processes=2 threads=25 display-name=%{GROUP}
+   WSGIProcessGroup UNAG.djangoserver
+
+   WSGIScriptAlias /sare /var/www/UNAG/UNAG/wsgi.py
+
+   #Alias /media/ /var/www/UNAG/UNAG/media/
+</VirtualHost>

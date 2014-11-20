@@ -1,3 +1,4 @@
+
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #   * Rearrange models' order
@@ -166,18 +167,7 @@ class AlumnosProgramStudent(models.Model):
         managed = False
         db_table = 'alumnos_program_student'
 
-class AlumnosResumenAsistencia(models.Model):
-    id = models.IntegerField(primary_key=True)
-    parcial = models.ForeignKey('CentroeducativoParcial')
-    matricula = models.ForeignKey(AlumnosMatricula)
-    total_dias = models.SmallIntegerField()
-    usuario_creador = models.ForeignKey('AuthUser', blank=True, null=True)
-    usuario_modifico = models.ForeignKey('AuthUser', blank=True, null=True)
-    fecha_creacion = models.DateTimeField(blank=True, null=True)
-    fecha_modificacion = models.DateTimeField(blank=True, null=True)
-    class Meta:
-        managed = False
-        db_table = 'alumnos_resumen_asistencia'
+
 
 class AlumnosResumenasistencia(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -1472,92 +1462,6 @@ class NotasNotaretrasada(models.Model):
     class Meta:
         managed = False
         db_table = 'notas_notaretrasada'
-
-class Pbcatcol(models.Model):
-    pbc_tnam = models.CharField(max_length=65)
-    pbc_tid = models.IntegerField(blank=True, null=True)
-    pbc_ownr = models.CharField(max_length=65)
-    pbc_cnam = models.CharField(max_length=65)
-    pbc_cid = models.SmallIntegerField(blank=True, null=True)
-    pbc_labl = models.CharField(max_length=254, blank=True)
-    pbc_lpos = models.SmallIntegerField(blank=True, null=True)
-    pbc_hdr = models.CharField(max_length=254, blank=True)
-    pbc_hpos = models.SmallIntegerField(blank=True, null=True)
-    pbc_jtfy = models.SmallIntegerField(blank=True, null=True)
-    pbc_mask = models.CharField(max_length=31, blank=True)
-    pbc_case = models.SmallIntegerField(blank=True, null=True)
-    pbc_hght = models.SmallIntegerField(blank=True, null=True)
-    pbc_wdth = models.SmallIntegerField(blank=True, null=True)
-    pbc_ptrn = models.CharField(max_length=31, blank=True)
-    pbc_bmap = models.CharField(max_length=1, blank=True)
-    pbc_init = models.CharField(max_length=254, blank=True)
-    pbc_cmnt = models.CharField(max_length=254, blank=True)
-    pbc_edit = models.CharField(max_length=31, blank=True)
-    pbc_tag = models.CharField(max_length=254, blank=True)
-    class Meta:
-        managed = False
-        db_table = 'pbcatcol'
-
-class Pbcatedt(models.Model):
-    pbe_name = models.CharField(max_length=30)
-    pbe_edit = models.CharField(max_length=254, blank=True)
-    pbe_type = models.SmallIntegerField(blank=True, null=True)
-    pbe_cntr = models.IntegerField(blank=True, null=True)
-    pbe_seqn = models.SmallIntegerField()
-    pbe_flag = models.IntegerField(blank=True, null=True)
-    pbe_work = models.CharField(max_length=32, blank=True)
-    class Meta:
-        managed = False
-        db_table = 'pbcatedt'
-
-class Pbcatfmt(models.Model):
-    pbf_name = models.CharField(unique=True, max_length=30)
-    pbf_frmt = models.CharField(max_length=254, blank=True)
-    pbf_type = models.SmallIntegerField(blank=True, null=True)
-    pbf_cntr = models.IntegerField(blank=True, null=True)
-    class Meta:
-        managed = False
-        db_table = 'pbcatfmt'
-
-class Pbcattbl(models.Model):
-    pbt_tnam = models.CharField(max_length=65)
-    pbt_tid = models.IntegerField(blank=True, null=True)
-    pbt_ownr = models.CharField(max_length=65)
-    pbd_fhgt = models.SmallIntegerField(blank=True, null=True)
-    pbd_fwgt = models.SmallIntegerField(blank=True, null=True)
-    pbd_fitl = models.CharField(max_length=1, blank=True)
-    pbd_funl = models.CharField(max_length=1, blank=True)
-    pbd_fchr = models.SmallIntegerField(blank=True, null=True)
-    pbd_fptc = models.SmallIntegerField(blank=True, null=True)
-    pbd_ffce = models.CharField(max_length=18, blank=True)
-    pbh_fhgt = models.SmallIntegerField(blank=True, null=True)
-    pbh_fwgt = models.SmallIntegerField(blank=True, null=True)
-    pbh_fitl = models.CharField(max_length=1, blank=True)
-    pbh_funl = models.CharField(max_length=1, blank=True)
-    pbh_fchr = models.SmallIntegerField(blank=True, null=True)
-    pbh_fptc = models.SmallIntegerField(blank=True, null=True)
-    pbh_ffce = models.CharField(max_length=18, blank=True)
-    pbl_fhgt = models.SmallIntegerField(blank=True, null=True)
-    pbl_fwgt = models.SmallIntegerField(blank=True, null=True)
-    pbl_fitl = models.CharField(max_length=1, blank=True)
-    pbl_funl = models.CharField(max_length=1, blank=True)
-    pbl_fchr = models.SmallIntegerField(blank=True, null=True)
-    pbl_fptc = models.SmallIntegerField(blank=True, null=True)
-    pbl_ffce = models.CharField(max_length=18, blank=True)
-    pbt_cmnt = models.CharField(max_length=254, blank=True)
-    class Meta:
-        managed = False
-        db_table = 'pbcattbl'
-
-class Pbcatvld(models.Model):
-    pbv_name = models.CharField(unique=True, max_length=30)
-    pbv_vald = models.CharField(max_length=254, blank=True)
-    pbv_type = models.SmallIntegerField(blank=True, null=True)
-    pbv_cntr = models.IntegerField(blank=True, null=True)
-    pbv_msg = models.CharField(max_length=254, blank=True)
-    class Meta:
-        managed = False
-        db_table = 'pbcatvld'
 
 class PmatriculaPrealumno(models.Model):
     id = models.IntegerField(primary_key=True)

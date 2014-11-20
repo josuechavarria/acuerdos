@@ -60,6 +60,7 @@ class plazas_disponibles(models.Model):
 		)
 		verbose_name_plural = "plazas disponibles"
 
+
 class acuerdo_basica(models.Model):
 	#infomacion general del acuerdo
 	plaza_disponible=models.ForeignKey(plazas_disponibles)
@@ -98,10 +99,111 @@ class acuerdo_basica(models.Model):
 	usuario_modificador=models.ForeignKey(User, related_name='acuerdo_basica_usuario_modificador')
 	fecha_modificacion=models.DateField(default=datetime.now())
 
+	
+	#def __unicode__ (self):
+		#return self.nacuerdo
+
 	class Meta:
 		permissions = (
 			("can_view_acuerdos", "Puede entrar a admon de acuerdos"),
 			("can_view_acuerdos_basica", "Puede entrar a admon de acuerdos basica"),
-			("can_view_acuerdos_media", "Puede entrar a admon de acuerdos media"),
+			("can_view_reportes", "Puede entrar a admon de reportes")
 		)
 		verbose_name_plural = "Acuerdos de basica"
+
+
+
+class acuerdo_prebasica(models.Model):
+	#infomacion general del acuerdo
+	plaza_disponible=models.ForeignKey(plazas_disponibles)
+	accion=models.CharField(max_length=30, verbose_name="Acción No.")
+	nacuerdo=models.CharField(max_length=20, verbose_name="Acuerdo #")
+	fecha=models.DateField(default=datetime.now())
+	movimiento=models.ForeignKey(subtipos_acuerdos)
+	vigencia_desde=models.DateField()
+	vigencia_hasta=models.DateField(verbose_name="Hasta", null=True, default=None, blank=True)
+	#infomacion del docente
+	clave_escalafon_docente=models.CharField(max_length=15, verbose_name="Clave de escalafon")
+	nombres_docente=models.CharField(max_length=45, verbose_name="Nombres")
+	apellidos_docente=models.CharField(max_length=45, verbose_name="Apellidos")
+	identidad_docente=models.CharField(max_length=13, verbose_name="Identidad")
+	sexo_docente=models.CharField(max_length=10)
+	fecha_nacimiento_docente=models.DateField(verbose_name="Fecha Nacimiento")
+	colegio1=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_p_colegio1")
+	colegio2=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_p_colegio2", null=True, default=None, blank=True)
+	numero_imprema=models.CharField(max_length=15, verbose_name="Número INPREMA")
+	estado_docente=models.CharField(max_length=25, verbose_name="Nota de concurso")
+	#informacion del centro educativo
+	cargo=models.ForeignKey(cargos, verbose_name="Cargo a ocupar")
+	codigo_centro=models.CharField(max_length=9, verbose_name="Código estadístico")
+	nombre_centro=models.CharField(max_length=255, verbose_name="Escuela")
+	departamento=models.ForeignKey(departamento)
+	municipio=models.ForeignKey(municipio)
+	aldea=models.ForeignKey(aldea)
+	#informacion de la plaza
+	estructura_plaza=models.CharField(max_length=20)
+	estructura_presupuestaria=models.CharField(max_length=15)
+	jornada_laboral=models.ForeignKey(jornadas_laborales, verbose_name="JORNADA LABORAL")
+	justificacion=models.TextField()
+	estado=models.ForeignKey(estados_acuerdo)
+	usuario_creador=models.ForeignKey(User, related_name='acuerdo_prebasica_usuario_creador')
+	fecha_creacion=models.DateField(default=datetime.now())
+	usuario_modificador=models.ForeignKey(User, related_name='acuerdo_prebasica_usuario_modificador')
+	fecha_modificacion=models.DateField(default=datetime.now())
+
+	class Meta:
+		permissions = (
+			("can_view_acuerdos", "Puede entrar a admon de acuerdos"),
+			("can_view_acuerdos_basica", "Puede entrar a admon de acuerdos prebasica")
+			#("can_view_acuerdos_media", "Puede entrar a admon de acuerdos media")
+			
+		
+		)
+		verbose_name_plural = "Acuerdos de prebasica"
+
+
+class acuerdo_media(models.Model):
+	#infomacion general del acuerdo
+	plaza_disponible=models.ForeignKey(plazas_disponibles)
+	accion=models.CharField(max_length=30, verbose_name="Acción No.")
+	nacuerdo=models.CharField(max_length=20, verbose_name="Acuerdo #")
+	fecha=models.DateField(default=datetime.now())
+	movimiento=models.ForeignKey(subtipos_acuerdos)
+	vigencia_desde=models.DateField()
+	vigencia_hasta=models.DateField(verbose_name="Hasta", null=True, default=None, blank=True)
+	#infomacion del docente
+	clave_escalafon_docente=models.CharField(max_length=15, verbose_name="Clave de escalafon")
+	nombres_docente=models.CharField(max_length=45, verbose_name="Nombres")
+	apellidos_docente=models.CharField(max_length=45, verbose_name="Apellidos")
+	identidad_docente=models.CharField(max_length=13, verbose_name="Identidad")
+	sexo_docente=models.CharField(max_length=10)
+	fecha_nacimiento_docente=models.DateField(verbose_name="Fecha Nacimiento")
+	colegio1=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_m_colegio1")
+	colegio2=models.ForeignKey(colegios_magisteriales, related_name="acuerdo_m_colegio2", null=True, default=None, blank=True)
+	numero_imprema=models.CharField(max_length=15, verbose_name="Número INPREMA")
+	estado_docente=models.CharField(max_length=25, verbose_name="Nota de concurso")
+	#informacion del centro educativo
+	cargo=models.ForeignKey(cargos, verbose_name="Cargo a ocupar")
+	codigo_centro=models.CharField(max_length=9, verbose_name="Código estadístico")
+	nombre_centro=models.CharField(max_length=255, verbose_name="Escuela")
+	departamento=models.ForeignKey(departamento)
+	municipio=models.ForeignKey(municipio)
+	aldea=models.ForeignKey(aldea)
+	#informacion de la plaza
+	estructura_plaza=models.CharField(max_length=20)
+	estructura_presupuestaria=models.CharField(max_length=15)
+	jornada_laboral=models.ForeignKey(jornadas_laborales, verbose_name="JORNADA LABORAL")
+	justificacion=models.TextField()
+	estado=models.ForeignKey(estados_acuerdo)
+	usuario_creador=models.ForeignKey(User, related_name='acuerdo_media_usuario_creador')
+	fecha_creacion=models.DateField(default=datetime.now())
+	usuario_modificador=models.ForeignKey(User, related_name='acuerdo_media_usuario_modificador')
+	fecha_modificacion=models.DateField(default=datetime.now())
+
+	class Meta:
+		permissions = (
+			("can_view_acuerdos", "Puede entrar a admon de acuerdos"),
+			("can_view_acuerdos_media", "Puede entrar a admon de acuerdos media")
+			#("can_view_acuerdos_media", "Puede entrar a admon de acuerdos media")
+		)
+		verbose_name_plural = "Acuerdos de media"

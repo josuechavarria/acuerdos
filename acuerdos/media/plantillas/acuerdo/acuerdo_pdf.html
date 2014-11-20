@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<style type="text/css">
+@page {
+  size: letter portrait;
+  margin-left: 2.5cm;
+  margin-right: 2.5cm;
+  margin-bottom: 1cm;
+  @frame footer {
+    -pdf-frame-content: footerContent;
+    bottom: 1cm;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    height: 1cm;
+  }
+} 
+</style>
+</head>    
+<body>
+	
+    <div class="center"><center><img align="center" src="acuerdos/media/estaticos/images/logo_se.png" width="150" height="100"></center>
+    
+
+    <p align="center"><b>Direcci&#243n Departamental de Educaci&#243n de {{acuerdo.departamento.descripcion}}<b/><br><font size="3">{{acuerdo.municipio.descripcion}}, {{acuerdo.departamento.descripcion}}&nbsp;Telefax.</font></p>
+
+    <p><b>ACUERDO No.{{acuerdo.nacuerdo}}</b><br><h>
+    {{acuerdo.municipio.descripcion}} , {{acuerdo.departamento.descripcion}} {{acuerdo.fecha}}</h></p>
+
+    <br>Señor(a):</br>
+    
+    <font face="">Para su Conocimiento y dem&aacutes fines trascribo a usted, el acuerdo que literamente dice: ACUERDO No.{{acuerdo.nacuerdo}}.{{acuerdo.municipio.descripcion}}, {{acuerdo.departamento.descripcion}} de fecha {{acuerdo.fecha}} (LA) DIRECTOR(A) DEPARTAMENTAL DE EDUCACION DE {{acuerdo.departamento.descripcion}} en base a lo dispuesto en el ACUERDO EJECUTIVO de fecha, emitido por el presidente de la Republica por ley.</font>
+    
+    <p align="center"><b> ACUERDA: </b> </p>		
+    <h3>{{acuerdo.movimiento.descripcion}} al siguiente personal Docente asignado al Centro Educativo dependiente de la Direcci&#243n Departamental de {{acuerdo.departamento.descripcion}}: </h3>
+   <p align="center" > {{Neducativo.nombre}} </p>
+    
+<p>
+   
+    
+
+    <font>Nombre:	<u>{{acuerdo.nombres_docente}} {{acuerdo.apellidos_docente}}</u> 
+    <h="right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Frontera: </b>{{valor}}</h></font>
+    <h2>Identidad: {{acuerdo.identidad_docente}}
+    <h="right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Acci&#243n: </b>{{acuerdo.accion}}</h></h2>
+    <h2>Tipo de Acci&#243n: {{tacuerdo.descripcion}} 
+    <h="right"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Clave SGRHD: </b>{{valor}}</h></h2>
+    <h2> Vigencia:{{acuerdo.vigencia_desde}} al {{acuerdo.vigencia_hasta}}</h2>
+    <h2> Cargo: {{acuerdo.cargo}}</h2>
+    <h2> Escuela: {{acuerdo.nombre_centro}}</h2>
+    <h2> Lugar: {{acuerdo.aldea.descripcion}}</h2>
+    <h2> Muncipio:{{acuerdo.municipio.descripcion}}</h2>
+    <h2> Departamento: {{acuerdo.departamento.descripcion}}</h2>
+    <h2> Nota de Consurso:{{acuerdo.estado.descripcion}}</h2>
+   
+
+
+</p>
+<p>
+ESTRUCTURA &nbsp;&nbsp;&nbsp; PRESUPUESTARIA &nbsp;&nbsp;&nbsp;ESTRUCTURA PLAZA SIARHD   &nbsp;&nbsp;&nbsp;CARGO  &nbsp;&nbsp;&nbsp;   JORNADA &nbsp;&nbsp;&nbsp; NIVEL
+</p>
+
+
+ <h2><u>JUSTIFICACION: {{acuerdo.justificacion}}</u></h2>
+
+<br><p>El sueldo será el asignado por la Sub-gerencia de Recursos Humanos.</p></b> El 
+presente acuerdo no tendra validez alguna si no cuenta con la asignaión presupuestaria respectiva.COMUNIQUESE: LIC. bbbbb Directora Departamental de Educación de {{acuerdo.departamento.descripcion}}  LIC. bbbb Secretaria Departamental de educacion en el departameno de {{acuerdo.departamento.descripcion}} 
+
+<p align="center"><b> __________________________________________________________ </b> </p>
+<p align="center"><b> SECRETARIA DEPARTAMENTAL DE EDUCACIÓN</b> </p>
+
+<center>
+<div id="footerContent">
+    200 DIAS DE CLASE CON CALIDAD POR NUESTROS NIÑOS, NIÑAS Y JOVENES
+  </div>
+</center>
+</body>
+</html>

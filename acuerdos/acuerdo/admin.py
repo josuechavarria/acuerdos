@@ -4,3 +4,7 @@ from models import *
 
 admin.site.register(plazas)
 admin.site.register(plazas_disponibles)
+admin.site.register(acuerdo_basica)
+
+
+

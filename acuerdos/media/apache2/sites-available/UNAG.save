@@ -1,0 +1,21 @@
+/usr/lib/pymodules/python2.7/django/contrib/admin/media//usr/lib/pymodules/python2.7/django/contrib/admin/media/<virtualhost *:80>
+ServerName UNAG
+DocumentRoot /var/www/UNAG
+<Directory /var/www/UNAG>
+	Order allow,deny
+	Allow from all
+</Directory>
+WSGIDaemonProcess UNAG.djangoserver processes=2 threads=15 display-name=%{GROUP}
+WSGIProcessGroup UNAG.djangoserver
+WSGIScriptAlias /unag /var/www/UNAG/UNAG/apache/django.wsgi
+Alias /media /var/www/UNAG/UNAG/media/
+<Directory /var/www/UNAG/UNAG/media>
+	Order deny,allow
+	Allow from all
+</Directory>
+Alias /static/admin /usr/lib/pymodules/python2.7/django/contrib/admin/media/
+<Directory /usr/lib/pymodules/python2.7/django/contrib/admin/media>
+	Order deny,allow
+	Allow from all
+</Directory>
+</virtualhost>
